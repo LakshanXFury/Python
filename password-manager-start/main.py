@@ -44,7 +44,7 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    website = website_entry.get()
+    website = website_entry.get().capitalize()
     email = email_entry.get()
     password = password_entry.get()
 
