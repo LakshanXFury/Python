@@ -5,3 +5,28 @@ ol {
 }
 
 /* Write your CSS below, don't change the rules above. */
+
+/* Element Selector */
+p{
+  color: red;
+}
+
+/* Class Selector */
+.notes{
+  color: blueviolet;
+}
+
+/* Id Selector */
+#id-selector-demo{
+  color: green;
+}
+
+/* Attribute Selector */
+li[value="4"]{
+  color: blue;
+}
+
+/* Universal Selector */
+*{
+  color: black;
+}

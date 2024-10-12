@@ -1,0 +1,76 @@
+/* #red{
+    background-color: red;
+}
+
+#blue{
+    background-color: blue;
+}
+
+#orange{
+    background-color: orange;
+}
+
+#green{
+    background-color: rgb(9, 99, 9);
+}
+
+#yellow{
+    background-color: yellow;
+}
+
+.color-title {
+    font-weight: normal;
+}
+
+img {
+    height: 200;
+    width: 200;
+}
+ */
+
+ img {
+    height: 200px;
+    width: 200px;
+  }
+  
+  .color-title {
+    font-weight: normal;
+  }
+  
+  #red {
+    color: red;
+  }
+  
+  #blue {
+    color: blue;
+  }
+  
+  #orange {
+    color: orange;
+  }
+  
+  #green {
+    color: green;
+  }
+  
+  #yellow {
+    color: yellow;
+  }
+
+
+
+  /* Chat gpt
+  The main difference between the commented-out CSS and the active CSS lies in the properties applied to the elements.
+
+  Background vs Color:
+  
+  In the commented-out section, the styles for #red, #blue, #orange, #green, and #yellow are setting the background-color, which changes the background color of these elements.
+  In the active section, the styles for these elements are applying the color property, which changes the text color of the elements, not the background.
+  Image Styling:
+  
+  In the commented-out CSS, the img tag's height and width are defined without the unit px. This is not standard and can cause unexpected behavior.
+  In the active CSS, the height and width for img are defined using 200px, which is correct and ensures the image is 200 pixels by 200 pixels.
+  Class .color-title:
+  
+  Both sections set the font-weight to normal, so this part behaves the same in both.   */
+  
