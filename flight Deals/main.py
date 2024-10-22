@@ -159,7 +159,7 @@ flight_search = FlightSearch()
 notification_manager = NotificationManager()
 
 # Set your origin airport
-ORIGIN_CITY_IATA = "LON"
+ORIGIN_CITY_IATA = "BLR"
 
 # ==================== Update the Airport Codes in Google Sheet ====================
 
