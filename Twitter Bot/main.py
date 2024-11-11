@@ -56,8 +56,21 @@ class InternetSpeedTwitterBot:
 
     def get_internet_speed(self):
         self.driver.get("https://www.speedtest.net/")
-        self.driver.find_element(By.XPATH, value="//span[text()='Go']").click()
+        time.sleep(4)
+        try:
+            self.driver.find_element(By.XPATH, value="//button[text()='I Accept']").click()
+            time.sleep(4)
+        except NoSuchElementException:
+            self.driver.find_element(By.XPATH, value="//button[text()='Continue']").click()
+        finally:
+            time.sleep(5)
+            go_button = self.driver.find_element(By.CSS_SELECTOR, value=".start-button a")
+            go_button.click()
 
+        time.sleep(60)
+        download_speed = self.driver.find_element(By.XPATH, value="//div[text()[normalize-space()='Download']]"
+                                                                   "/following-sibling::div/span").text
+        print(download_speed)
 
     def tweet_at_provider(self):
         pass
