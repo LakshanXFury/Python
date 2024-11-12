@@ -68,12 +68,39 @@ class InternetSpeedTwitterBot:
             go_button.click()
 
         time.sleep(60)
-        download_speed = self.driver.find_element(By.XPATH, value="//div[text()[normalize-space()='Download']]"
-                                                                   "/following-sibling::div/span").text
-        print(download_speed)
+        self.download_speed = float(self.driver.find_element(By.XPATH, value="//div[text()[normalize-space()='Download']]"
+                                                                   "/following-sibling::div/span").text)
+        print(self.download_speed)
 
     def tweet_at_provider(self):
-        pass
+         if self.download_speed < 100:
+            self.driver.get("https://twitter.com/login")
+            time.sleep(7)
+            self.driver.find_element(By.XPATH, '//input[@autocomplete="username"]').send_keys(TWITTER_EMAIL)
+            self.driver.find_element(By.XPATH, value="//span[text()='Next']").click()
+            time.sleep(4)
+
+            try:
+                # Try to find an element
+                self.driver.find_element(By.XPATH, value='//input[@autocomplete="current-password"]').send_keys(TWITTER_PASSWORD)
+                time.sleep(2)
+                self.driver.find_element(By.XPATH, value="//span[text()='Log in']").click()
+
+            except NoSuchElementException:
+                # Handle the case when the element is not found
+                self.driver.find_element(By.XPATH, value="//span[text()='Phone or username']//ancestor::div[2]/following-sibling::div//"
+                                                    "input").send_keys(TWITTER_USERNAME)
+                self.driver.find_element(By.XPATH, value="//span[text()='Next']").click()
+                time.sleep(4)
+                self.driver.find_element(By.NAME, value="password").send_keys(TWITTER_PASSWORD)
+                self.driver.find_element(By.XPATH, value="//span[text()='Log in']").click()
+
+            finally:
+                time.sleep(4)
+                post = self.driver.find_element(By.XPATH, value="(//div[text()='What is happening?!']/parent::div/following-sibling::div//div)[4]")
+                post.send_keys(f"Hi @BSNLCorporate \n Why is my internet speed {self.download_speed}mbps down, when I pay for 100 mbps down")
+                time.sleep(4)
+                self.driver.find_element(By.XPATH, value="//span[text()='Post']").click()
 
 bot = InternetSpeedTwitterBot()
 bot.get_internet_speed()
