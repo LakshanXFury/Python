@@ -73,7 +73,7 @@ class InternetSpeedTwitterBot:
         print(self.download_speed)
 
     def tweet_at_provider(self):
-         if self.download_speed < 100:
+         if self.download_speed < float(PROMISED_DOWNLOAD):
             self.driver.get("https://twitter.com/login")
             time.sleep(7)
             self.driver.find_element(By.XPATH, '//input[@autocomplete="username"]').send_keys(TWITTER_EMAIL)
@@ -98,7 +98,7 @@ class InternetSpeedTwitterBot:
             finally:
                 time.sleep(4)
                 post = self.driver.find_element(By.XPATH, value="(//div[text()='What is happening?!']/parent::div/following-sibling::div//div)[4]")
-                post.send_keys(f"Hi @BSNLCorporate \n Why is my internet speed {self.download_speed}mbps down, when I pay for 100 mbps down")
+                post.send_keys(f"Hi @BSNLCorporate \n Why is my internet speed {self.download_speed}mbps down, when I pay for {PROMISED_DOWNLOAD} mbps down")
                 time.sleep(4)
                 self.driver.find_element(By.XPATH, value="//span[text()='Post']").click()
 
