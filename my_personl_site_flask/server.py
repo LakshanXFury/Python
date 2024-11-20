@@ -8,7 +8,7 @@ app = Flask(__name__)
 #Decorator
 @app.route('/')
 def server():
-    return render_template("index.html")
+    return render_template("html5up.html")
 
 
 if __name__ == "__main__":
