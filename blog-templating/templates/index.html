@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Posts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<div class="wrapper">
+    <div class="top">
+        <div class="title"><h1>My Blog</h1></div>
+    </div>
+    {% for blog_post in posts: %}
+        {% if blog_post["id"] == 1: %}
+            <div class="content">
+                <div class="card">
+                    <h2>{{ blog_post["title"] }}</h2>
+                    <p class="text"> {{ blog_post["subtitle"] }} </p>
+                    <a href="{{ url_for('get_blog_id', id=1) }}">Read</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if blog_post["id"] == 2: %}
+            <div class="content">
+                <div class="card">
+                    <h2>{{ blog_post["title"] }}</h2>
+                    <p class="text"> {{ blog_post["subtitle"] }} </p>
+                    <a href="{{ url_for('get_blog_id', id=2) }}">Read</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if blog_post["id"] == 3: %}
+            <div class="content">
+                <div class="card">
+                    <h2>{{ blog_post["title"] }}</h2>
+                    <p class="text"> {{ blog_post["subtitle"] }} </p>
+                    <a href="{{ url_for('get_blog_id', id=3) }}">Read</a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+</body>
+<footer>
+    <p>Made with ♥️ in India.</p>
+</footer>
+</html>
