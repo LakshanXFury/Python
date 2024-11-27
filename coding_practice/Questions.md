@@ -1,6 +1,7 @@
 Lists and Loops
 
 Write a program to remove duplicates from a list.
+
 Write a program to find the second-largest number in a list.
 
 Functions
