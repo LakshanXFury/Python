@@ -9,9 +9,12 @@ list_with_duplicates = [1, 2, 3, 2, 4, 5, 6, 3, 7, 5]
 
 
 unique_list = []
-for item in list_with_duplicates:
-    if item not in unique_list:
-        unique_list.append(item)
+# for item in list_with_duplicates:
+#     if item not in unique_list:
+#         unique_list.append(item)
 
+#Using Comprehension
+
+[unique_list.append(item) for item in list_with_duplicates if item not in unique_list]
 
 print(unique_list)
