@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 
@@ -33,6 +33,17 @@ def post_body(index):
             print(f"This is the blog posst chosen{requested_post}")
 
     return render_template("post.html", post=requested_post)
+
+@app.route("/form-entry", methods=["post"])
+def receive_data():
+    print(request.method)   # To check which method triggered the route.
+    name = request.form["username"]
+    email = request.form["email"]
+    phone = request.form["email"]
+    message = request.form["email"]
+    print(f"Name:{name}\n Email:{email}\n Phone: {phone}\n Message: {message}")
+    return f"<h1>Successfully sent your message {name}</h1>"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
