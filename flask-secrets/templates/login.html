@@ -1,39 +1,51 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    {{ bootstrap.load_css() }}
-    <title>Login</title>
-</head>
-<body>
+<!--<!DOCTYPE HTML>-->
+<!--<html>-->
+<!--<head>-->
+<!--    {{ bootstrap.load_css() }}-->
+<!--    <title>Login</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <h1>Login</h1>-->
+<!--        <form method="POST" action="{{url_for('login')}}" novalidate>-->
+<!--            {{ form.csrf_token }}-->
+
+<!--            &lt;!&ndash; Email Field &ndash;&gt;-->
+<!--            <p>-->
+<!--                {{ form.email.label }} <br>-->
+<!--                {{ form.email(size=30) }}-->
+<!--            </p>-->
+<!--            {% for err in form.email.errors %}-->
+<!--                <span style="color: red;">{{ err }}</span>-->
+<!--            {% endfor %}-->
+
+<!--            &lt;!&ndash; Password Field &ndash;&gt;-->
+<!--            <p>-->
+<!--                {{ form.password.label }} <br>-->
+<!--                {{ form.password(size=30) }}-->
+<!--            </p>-->
+<!--            {% for err in form.password.errors %}-->
+<!--                <span style="color: red;">{{ err }}</span>-->
+<!--            {% endfor %}-->
+
+<!--            &lt;!&ndash; Submit Button &ndash;&gt;-->
+<!--            {{ form.submit() }}-->
+
+
+<!--            {{ bootstrap.load_js() }}-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+{% extends "base.html" %}
+{% from 'bootstrap4/form.html' import render_form %}
+{% block title %}Login{% endblock %}
+{% block content %}
     <div class="container">
         <h1>Login</h1>
-        <form method="POST" action="{{url_for('login')}}" novalidate>
-            {{ form.csrf_token }}
-
-            <!-- Email Field -->
-            <p>
-                {{ form.email.label }} <br>
-                {{ form.email(size=30) }}
-            </p>
-            {% for err in form.email.errors %}
-                <span style="color: red;">{{ err }}</span>
-            {% endfor %}
-
-            <!-- Password Field -->
-            <p>
-                {{ form.password.label }} <br>
-                {{ form.password(size=30) }}
-            </p>
-            {% for err in form.password.errors %}
-                <span style="color: red;">{{ err }}</span>
-            {% endfor %}
-
-            <!-- Submit Button -->
-            {{ form.submit() }}
-
-
-            {{ bootstrap.load_js() }}
-        </form>
+         {{ render_form(form) }}
     </div>
-</body>
-</html>
+{% endblock %}
