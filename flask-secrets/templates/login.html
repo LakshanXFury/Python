@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    {{ bootstrap.load_css() }}
     <title>Login</title>
 </head>
 <body>
@@ -29,6 +30,9 @@
 
             <!-- Submit Button -->
             {{ form.submit() }}
+
+
+            {{ bootstrap.load_js() }}
         </form>
     </div>
 </body>

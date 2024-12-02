@@ -2,9 +2,9 @@ from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, EmailField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
-
+from flask_bootstrap import Bootstrap5
 '''
-Red underlines? Install the required packages first: 
+Red underlines? Install the required packages first: 78
 Open the Terminal in PyCharm (bottom left). 
 
 On Windows type:
@@ -17,6 +17,8 @@ This will install the packages from requirements.txt for this project.
 '''
 
 app = Flask(__name__)
+bootstrap = Bootstrap5(app)
+
 
 
 class LoginForm(FlaskForm):
@@ -48,8 +50,15 @@ app.secret_key = "8b9c6df0b032ebde14da573d573aef659d7be6017777c8f3b6846fe52aeead
 @app.route("/login", methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
-    login_form.validate_on_submit()
+    if login_form.validate_on_submit():
+        print(login_form.email.data)
+        print(login_form.password.data)
+        if login_form.email.data == "admin@email.com" and login_form.password.data == "12345678":
+            return render_template("success.html")
+        else:
+            return render_template("denied.html")
     return render_template('login.html', form=login_form)
+
 
 
 if __name__ == '__main__':
