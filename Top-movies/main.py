@@ -44,6 +44,10 @@ class Movie(db.Model):
 with app.app_context():
     db.create_all()
 
+class RateMovieForm(FlaskForm):
+    rating = StringField("Your Rating Out of 10 e.g. 7.5")
+    review = StringField("Your Review")
+    submit = SubmitField("Done")
 
 # CREATE TABLE
 
@@ -59,21 +63,18 @@ def home():
     return render_template("index.html", movies = all_movies )
 
 
-# def add_data():
-#     with app.app_context():
-#         second_movie = Movie(
-#             title="Avatar The Way of Water",
-#             year=2022,
-#             description="Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.",
-#             rating=7.3,
-#             ranking=9,
-#             review="I liked the water.",
-#             img_url="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
-#         )
-#         db.session.add(second_movie)
-#         db.session.commit()
-#
-# add_data()
+@app.route("/edit", methods=["GET", "POST"])
+def rate_movie():
+    form = RateMovieForm()
+    movie_id = request.args.get("id")  # gets the id from the url which is being sent
+    movie = db.get_or_404(Movie, movie_id)
+    if form.validate_on_submit():
+        movie.rating = float(form.rating.data)
+        movie.review = form.review.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template("edit.html", movie=movie, form=form)
+
 
 
 if __name__ == '__main__':

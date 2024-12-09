@@ -6,7 +6,7 @@ list2 = [852345, 763567, 91276]
 
 
 def list_to_dict(value_a, value_b):
-    dictionary = dict(zip(value_a, value_b))   #dictfn will convert into Dictionary 
+    dictionary = dict(zip(value_a, value_b))   #dictfn will convert into Dictionary
     print(dictionary)
 
 
