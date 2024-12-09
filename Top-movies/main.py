@@ -63,6 +63,7 @@ def home():
     return render_template("index.html", movies = all_movies )
 
 
+#Edit Movie rating & review
 @app.route("/edit", methods=["GET", "POST"])
 def rate_movie():
     form = RateMovieForm()
@@ -74,6 +75,19 @@ def rate_movie():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template("edit.html", movie=movie, form=form)
+
+@app.route("/delete")
+def delete():
+    movie_id = request.args.get('id')   # gets the id from the url which is being sent
+    print(movie_id)
+    movie_to_delete = db.get_or_404(Movie, movie_id)
+
+    # Alternative way to select the book to delete.
+    # book_to_delete = db.session.execute(db.select(Movie).where(Movie.id == movie_id)).scalar()
+    db.session.delete(movie_to_delete)
+    db.session.commit()
+
+    return redirect(url_for("home"))
 
 
 
