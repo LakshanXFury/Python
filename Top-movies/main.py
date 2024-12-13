@@ -8,6 +8,10 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
 
+api_key = "61e528dacff24903d942a0faf48300a2"
+url = "https://api.themoviedb.org/3/search/movie"
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap5(app)
@@ -44,10 +48,17 @@ class Movie(db.Model):
 with app.app_context():
     db.create_all()
 
+
 class RateMovieForm(FlaskForm):
     rating = StringField("Your Rating Out of 10 e.g. 7.5")
     review = StringField("Your Review")
     submit = SubmitField("Done")
+
+
+class AddMovies(FlaskForm):
+    title_movie = StringField("Add New Movie")
+    submit = SubmitField("Add Movie")
+
 
 # CREATE TABLE
 
@@ -60,7 +71,7 @@ def home():
     # Use .scalars() to get the elements rather than entire rows from the database
     all_movies = result.scalars().all()
     print(all_movies)
-    return render_template("index.html", movies = all_movies )
+    return render_template("index.html", movies=all_movies)
 
 
 #Edit Movie rating & review
@@ -76,9 +87,10 @@ def rate_movie():
         return redirect(url_for('home'))
     return render_template("edit.html", movie=movie, form=form)
 
+
 @app.route("/delete")
 def delete():
-    movie_id = request.args.get('id')   # gets the id from the url which is being sent
+    movie_id = request.args.get('id')  # gets the id from the url which is being sent
     print(movie_id)
     movie_to_delete = db.get_or_404(Movie, movie_id)
 
@@ -89,6 +101,18 @@ def delete():
 
     return redirect(url_for("home"))
 
+
+@app.route("/add_movie", methods=["GET", "POST"])
+def add_movie():
+    form = AddMovies()
+
+    if form.validate_on_submit():
+        movie_title = form.title_movie.data
+        response = requests.get(url=url, params={"query": movie_title, "api_key": api_key, "language": "en-US"})
+        api_response = response.json()['results']
+        return render_template("select.html", data=api_response)
+    
+    return render_template("add.html", form=form)
 
 
 if __name__ == '__main__':
