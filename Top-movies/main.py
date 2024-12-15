@@ -11,6 +11,9 @@ import requests
 api_key = "61e528dacff24903d942a0faf48300a2"
 url = "https://api.themoviedb.org/3/search/movie"
 
+movie_id_url = "https://api.themoviedb.org/3/movie/"
+img_path = "https://image.tmdb.org/t/p/w500/"
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -67,10 +70,17 @@ class AddMovies(FlaskForm):
 def home():
     ##READ ALL RECORDS
     # Construct a query to select from the database. Returns the rows in the database
-    result = db.session.execute(db.select(Movie).order_by(Movie.title))
+    result = db.session.execute(db.select(Movie).order_by(Movie.rating.desc()))
     # Use .scalars() to get the elements rather than entire rows from the database
     all_movies = result.scalars().all()
-    print(all_movies)
+
+    rank = 1  #Intially it is one, then it will get incremented
+    for movie in all_movies:
+        movie.ranking = rank  #Assigns 1 to Movie A from list
+        rank += 1 #Changes the rank to 2 , then in next iteration 2nd movies comes and takes the value of 2 and so on
+    db.session.commit()
+
+    # print(all_movies)
     return render_template("index.html", movies=all_movies)
 
 
@@ -113,6 +123,28 @@ def add_movie():
         return render_template("select.html", data=api_response)
     
     return render_template("add.html", form=form)
+
+@app.route("/find")
+def find_movie():
+    movie_api_id = request.args.get('id')
+    print(movie_api_id)
+    if movie_api_id:
+        api_search_url = f"{movie_id_url}{movie_api_id}"
+        response = requests.get(url=api_search_url, params={"api_key": api_key, "language": "en-US"})
+        data = response.json()
+        new_movie = Movie(
+            title=data["title"],
+            img_url=f"{img_path}{data['poster_path']}",
+            year=data["release_date"].split("-")[0],
+            description=data["overview"],
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+
+    return redirect(url_for("rate_movie", id=new_movie.id))
+
+
+
 
 
 if __name__ == '__main__':
