@@ -9,7 +9,7 @@ for i in range(1, n+1):
     for j in range(1, i):
         print(" ", end="")
     # Inner loop prints '2 * (N - i) + 1' stars
-    for j in range(1, 2 * (n - i) + 2):
+    for j in range(1, 2 * (n - i) + 2): # (8+2)=10 , (1,10) = 9 stars
         print("*", end="")
 
     print()
