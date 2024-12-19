@@ -10,9 +10,11 @@ app = Flask(__name__)
 class Base(DeclarativeBase):
     pass
 # Connect to Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+
+api_key = "niggauseme"
 
 
 # Cafe TABLE Configuration
@@ -108,7 +110,7 @@ def search():
 
     #Get particular data using where fn in SQL
 
-    result = db.session.execute(db.select(Cafe).where(Cafe.location==query_location))
+    result = db.session.execute(db.select(Cafe).where(Cafe.location == query_location))
     all_cafes = result.scalars().all()
     if all_cafes:
         return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])  # list comprehension
@@ -139,8 +141,41 @@ def post_new_cafe():
 
 
 # HTTP PUT/PATCH - Update Record
+@app.route("/update-price/<int:cafe_id>", methods=["PATCH"])
+def patch_new_price(cafe_id):
+    query_updated_price = request.args.get("new_price")
+    with app.app_context():
+        print(cafe_id)
+        cafe_to_update = db.get_or_404(Cafe, cafe_id)
+
+        if cafe_to_update:
+            cafe_to_update.coffee_price = query_updated_price
+            db.session.commit()
+            return jsonify(response={"success": "Successfully updated the price."}), 200  #Numbers in the end is for the response
+        else:
+            return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 400
+
 
 # HTTP DELETE - Delete Record
+@app.route("/report-closed/<int:cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+    api_key_from_url = request.args.get("api-key")
+    if api_key_from_url == api_key:
+        cafe = db.session.get(Cafe, cafe_id)  # Session.get can be used, so that u can add ur custom error message or it will return 404 default error
+        if cafe:
+            db.session.delete(cafe)
+            db.session.commit()
+            return jsonify(response={"success": "Successfully deleted the cafe from the database."}), 200
+        else:
+            return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 404
+    else:
+        return jsonify(error={"Forbidden": "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
+
+
+"""
+Post Man Documnetation
+https://documenter.getpostman.com/view/37019356/2sAYJ3D1QV
+"""
 
 
 if __name__ == '__main__':
