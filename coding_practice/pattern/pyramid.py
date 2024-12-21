@@ -12,4 +12,3 @@ def pyramid_pattern(rows):
 # Input number of rows for the pyramid
 rows = int(input("Enter the number of rows: "))
 pyramid_pattern(rows)
-

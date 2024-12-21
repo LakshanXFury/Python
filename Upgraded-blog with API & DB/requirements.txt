@@ -1,0 +1,1 @@
+Flask_CKEditor==1.0.0

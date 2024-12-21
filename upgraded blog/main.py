@@ -30,7 +30,7 @@ def post_body(index):
     for blog_post in post_response:
         if blog_post["id"] == index:
             requested_post = blog_post
-            print(f"This is the blog posst chosen{requested_post}")
+            print(f"This is the blog post chosen{requested_post}")
 
     return render_template("post.html", post=requested_post)
 
