@@ -2,15 +2,22 @@
 
 <div class="box">
   <h1>Login</h1>
-  <!-- TODO: Use Message Flashing to display feedback to the user with a <p> -->
+  {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+         <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+<!--    Why Is This Combination Used?-->
+<!--    with: To keep the template clean by assigning get_flashed_messages() to a variable.-->
+<!--    if: To avoid rendering unnecessary HTML when there are no messages.-->
+<!--    for: To iterate over multiple flashed messages and display each one.-->
+<!--    -->
   <form action="{{ url_for('login') }}" method="post">
     <input type="text" name="email" placeholder="Email" required="required" />
-    <input
-      type="password"
-      name="password"
-      placeholder="Password"
-      required="required"
-    />
+    <input type="password" name="password" placeholder="Password" required="required"/>
     <button type="submit" class="btn btn-primary btn-block btn-large">
       Let me in.
     </button>

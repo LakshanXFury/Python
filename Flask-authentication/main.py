@@ -28,53 +28,116 @@ db.init_app(app)
 
 # CREATE TABLE IN DB
 
-
-class User(db.Model):
+# Define User model with UserMixin. Thanks to UserMixin our user have 3 extra features😀: is_active,
+# is_authenticated, is_anonymous
+class User(db.Model, UserMixin):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(1000))
 
+    def __init__(self, email, password, name):
+        self.email = email
+        self.password = password
+        self.name = name
+
 
 with app.app_context():
     db.create_all()
 
+# Configure Flask-Login's Login Manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+# Create a user_loader callback
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", logged_in=current_user.is_authenticated)
 
 
-@app.route('/register',  methods=["GET", "POST"])
+@app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        #Already logged in user
+        email = request.form.get('email')
+        result = db.session.execute(db.select(User).where(User.email == email))
+        # Note, email in db is unique so will only have one result.
+        user = result.scalar()
+
+        if user:
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for('login'))
+
+        # Hashing and salting the password entered by the user
+        # generate_password_hash(password, method='scrypt', salt_length=16)
+        hash_and_salted_password = generate_password_hash(
+            password=request.form.get('password'),
+            method='pbkdf2:sha256',
+            salt_length=8
+        )
+
         register_new_user = User(
             email=request.form.get("email"),
-            password=request.form.get("password"),
+            password=hash_and_salted_password,
             name=request.form.get("name")
         )
         db.session.add(register_new_user)
         db.session.commit()
         # Passing over the user's name
-        return render_template("secrets.html", name=request.form.get('name'))
+        # print(hash_and_salted_password)
 
-    return render_template("register.html")
+        # Log in and authenticate user after adding details to database.
+        login_user(register_new_user)
+
+        # return render_template("secrets.html", name=request.form.get('name'))
+        return redirect(url_for("secrets"))
+
+    return render_template("register.html", logged_in=current_user.is_authenticated)
+                                                            #If the user is logged in then "is_authenticated" == True
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        # Find user by email entered.
+        result = db.session.execute(db.select(User).where(User.email == email))
+        user = result.scalar()
+
+        # Email doesn't exist or password incorrect.
+        if not user:
+            flash("That email does not exist, please try again.")
+            return redirect(url_for('login'))
+        elif not check_password_hash(user.password, password):
+            flash('Password incorrect, please try again.')
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for('secrets'))
+
+    return render_template("login.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/secrets')
+@login_required
 def secrets():
-
-    return render_template("secrets.html")
+    print(current_user.name)
+    # Passing the name from the current_user
+    return render_template("secrets.html", name=current_user.name, logged_in=True)
 
 
 @app.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('home'))
 
 
 @app.route('/download')
