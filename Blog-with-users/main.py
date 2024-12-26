@@ -37,24 +37,35 @@ db.init_app(app)
 
 # CONFIGURE TABLES
 class BlogPost(db.Model):
-    __tablename__ = "blog_posts"  # Default database (posts.db)
+    __tablename__ = "blog_posts"  # Default database (posts.db) #Child Table
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+
+    # Create Foreign Key, "users.id" the users refers to the tablename of User.
+    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+
+    # Create reference to the User object. The "posts" refers to the posts property in the User class.
+    author = relationship("User", back_populates="posts")
+
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     date: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
-    author: Mapped[str] = mapped_column(String(250), nullable=False)
+    # author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
 # TODO: Create a User table for all your registered users. 
 class User(UserMixin, db.Model):
     __bind_key__ = 'users'  # Uses the `users` bind (blog.db)
-    __tablename__ = "users"
+    __tablename__ = "users" #Parent Table
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
+
+    # This will act like a List of BlogPost objects attached to each User.  # One-to-many relationship
+    # The "author" refers to the author property in the BlogPost class.
+    posts = relationship("BlogPost", back_populates="author")
 
     def __init__(self, email, password, name):
         # self.id = id
@@ -74,6 +85,18 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return db.get_or_404(User, user_id)
+
+#Create admin-only decorator
+#A decorator is a function that wraps and replaces another function.
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        #If id is not 1 then return abort with 403 error
+        if current_user.id != 1:
+            return abort(403)
+        #Otherwise continue with the route function
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
@@ -141,7 +164,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    # We need logout to make the current_user to work, 
+    # We need logout to make the current_user to work,
     # Sometimes user session in chrome doesn't expire
     logout_user()
     return redirect(url_for('get_all_posts'))
@@ -163,6 +186,7 @@ def show_post(post_id):
 
 # TODO: Use a decorator so only an admin user can create a new post
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -182,6 +206,7 @@ def add_new_post():
 
 # TODO: Use a decorator so only an admin user can edit a post
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
     edit_form = CreatePostForm(
@@ -204,6 +229,7 @@ def edit_post(post_id):
 
 # TODO: Use a decorator so only an admin user can delete a post
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete_post(post_id):
     post_to_delete = db.get_or_404(BlogPost, post_id)
     db.session.delete(post_to_delete)
