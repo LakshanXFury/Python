@@ -30,7 +30,7 @@ class Base(DeclarativeBase):
 The SQLALCHEMY_BINDS is where you specify additional databases."""
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
-app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///blog.db'}
+# app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///blog.db'}
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -53,11 +53,14 @@ class BlogPost(db.Model):
     # author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
+    # ***************Parent Relationship*************#
+    comments = relationship("Comment", back_populates="parent_post")
+
 
 # TODO: Create a User table for all your registered users. 
 class User(UserMixin, db.Model):
-    __bind_key__ = 'users'  # Uses the `users` bind (blog.db)
-    __tablename__ = "users" #Parent Table
+    # __bind_key__ = 'users'  # Uses the `users` bind (blog.db)
+    __tablename__ = "users"  #Parent Table
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
@@ -67,11 +70,35 @@ class User(UserMixin, db.Model):
     # The "author" refers to the author property in the BlogPost class.
     posts = relationship("BlogPost", back_populates="author")
 
+    comments = relationship("Comment", back_populates="comment_author")
+
     def __init__(self, email, password, name):
         # self.id = id
         self.email = email
         self.password = password
         self.name = name
+
+
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+
+    """Establish a One to Many relationship Between the User Table (Parent) and 
+        the Comment table (Child). Where One User is linked to Many Comment objects."""
+
+    # ******* Child relationship *******#
+    # "users.id" The users refers to the tablename of the Users class.
+    # "comments" refers to the comments property in the User class.
+    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+    comment_author = relationship("User", back_populates="comments")
+
+    # ***************Child Relationship*************#
+    """ Establish a One to Many relationship between each BlogPost object (Parent) and Comment object (Child). 
+    Where each BlogPost can have many associated Comment objects."""
+    post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
+    parent_post = relationship("BlogPost", back_populates="comments")
+
 
 
 with app.app_context():
@@ -86,6 +113,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return db.get_or_404(User, user_id)
 
+
 #Create admin-only decorator
 #A decorator is a function that wraps and replaces another function.
 def admin_only(f):
@@ -96,7 +124,19 @@ def admin_only(f):
             return abort(403)
         #Otherwise continue with the route function
         return f(*args, **kwargs)
+
     return decorated_function
+
+
+# For adding profile images to the comment section
+gravatar = Gravatar(app,
+                    size=100,
+                    rating='g',
+                    default='retro',
+                    force_default=False,
+                    force_lower=False,
+                    use_ssl=False,
+                    base_url=None)
 
 
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
@@ -178,10 +218,26 @@ def get_all_posts():
 
 
 # TODO: Allow logged-in users to comment on posts
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
-    return render_template("post.html", post=requested_post, current_user=current_user)
+    print(f"The requested post is {requested_post}")
+    # Add the CommentForm to the route
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash("You need to login or register to Comment")
+            return redirect(url_for("login"))
+
+        new_comment = Comment(
+            text=comment_form.comment_text.data,
+            author_id=current_user.id,
+            post_id=post_id
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+
+    return render_template("post.html", post=requested_post, current_user=current_user, form=comment_form)
 
 
 # TODO: Use a decorator so only an admin user can create a new post
