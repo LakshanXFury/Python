@@ -6,4 +6,5 @@ def downard_pattern(rows):
         print("*" * i)
 
 
-downard_pattern(10)
+input = int(input("Enter the number of Rows that needs to be printed: "))
+downard_pattern(input)
