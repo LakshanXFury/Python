@@ -1,0 +1,133 @@
+@charset "UTF-8";
+/* .gradient-background {
+    background: linear-gradient(300deg, #00bfff, #ff4c68, #ef8172);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
+
+.features{
+    background: lightgray;
+}
+
+.footer{
+    background: burlywood;
+}
+
+.portfolio{
+    background: lightgoldenrodyellow;
+} */
+
+/* Global Styles */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Header (Bootstrap classes already provide most styling) */
+  /* You can add custom header styles if needed */
+  header {
+    /* For example, add a subtle shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Title Section with Gradient Background */
+  .gradient-background {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+  }
+
+  #title {
+    padding: 60px 0;
+  }
+
+  /* Features Section */
+  .features {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+  }
+
+  .features .feature {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 20px;
+  }
+
+  .features .feature:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Portfolio Section */
+  .portfolio {
+    background-color: #ffffff;
+    padding: 60px 0;
+  }
+
+  .portfolio h2.index-module--sectionTitle--2gNoV {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  /* Footer */
+  .footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    font-size: 0.9rem;
+  }
+
+  .footer a {
+    color: #6c757d;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: #343a40;
+  }
+
+  /* Utility Class for Icon Links */
+  .icon-link {
+    text-decoration: none;
+    color: #0d6efd;
+    font-weight: 500;
+  }
+
+  .icon-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive Adjustments (if needed) */
+  @media (max-width: 576px) {
+    .features,
+    .portfolio {
+      padding: 40px 0;
+    }
+  }
+
+.footer-text{
+    font-size: 1.1rem;
+}
+
+
+/* Portfolio CSS */
+
+.lightcyan{
+    background-color: lightcyan;
+}

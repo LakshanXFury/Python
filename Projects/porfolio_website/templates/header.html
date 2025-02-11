@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+
+  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lakshan</title>
+    {% block styles %}
+
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+    {% endblock %}
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" style="padding-left: 2rem;">
+      <b><span class="fs-4">Portfolio</span></b>
+    </a>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="/portfolio" class="nav-link">Portfolio</a></li>
+        <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+    </ul>
+  </header>
