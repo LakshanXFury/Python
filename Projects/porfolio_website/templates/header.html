@@ -26,8 +26,14 @@
     </a>
 
     <ul class="nav nav-pills">
-        <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="/portfolio" class="nav-link">Portfolio</a></li>
-        <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+      <li class="nav-item">
+      <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" aria-current="page">Home</a>
+      </li>
+      <li class="nav-item">
+      <a href="{{ url_for('portfolio') }}" class="nav-link {% if request.endpoint == 'portfolio' %}active{% endif %}">Portfolio</a>
+      </li>
+      <li class="nav-item">
+      <a href="/contact" class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a>
+      </li>
     </ul>
   </header>
