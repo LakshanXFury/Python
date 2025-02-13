@@ -2,7 +2,24 @@
 <html lang="en">
 <head>
   <style>
+    html, body {
+            height: 100%;
+            margin: 0;
+        }
 
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        footer {
+            width: 100%;
+            position: relative;
+        }
   </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +50,7 @@
       <a href="{{ url_for('portfolio') }}" class="nav-link {% if request.endpoint == 'portfolio' %}active{% endif %}">Portfolio</a>
       </li>
       <li class="nav-item">
-      <a href="/contact" class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a>
+      <a href="{{ url_for('contact') }}" class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a>
       </li>
     </ul>
   </header>

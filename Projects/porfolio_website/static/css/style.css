@@ -131,3 +131,127 @@ body {
 .lightcyan{
     background-color: lightcyan;
 }
+
+/* Stick Footer to the bottom of the screen */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1; /* Ensures the container takes up available space, pushing the footer down */
+}
+
+footer {
+  width: 100%; /* Ensures the footer spans the entire width of the page */
+  position: relative; /* Allows padding or margins around the footer */
+}
+
+
+/* ------------  Contact --------------*/
+
+/* General container styling for the contact section */
+/* General styling for the outer container */
+#contact {
+  background-color: #f9f9f9; /* Light gray background for contrast */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  padding: 50px;
+  margin: 20px auto;
+  max-width: 900px; /* Centered content with fixed width */
+}
+
+/* Styling for the inner container */
+#contact_inside_div {
+  background-color: #ffffff; /* White background for contrast inside */
+  border: 1px solid #ddd; /* Light border for separation */
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Soft inner shadow */
+}
+
+/* Heading styles */
+#contact h1 {
+  color: #2c3e50; /* Dark slate blue */
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 36px;
+}
+
+#contact h2 {
+  color: #34495e; /* Slate gray */
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Paragraph styles */
+#contact p {
+  font-size: 16px;
+  color: #7f8c8d; /* Cool gray */
+  line-height: 1.8;
+}
+
+#contact a {
+  text-decoration: none;
+  color: #0077b5; /* LinkedIn blue for links */
+}
+
+#contact a:hover {
+  text-decoration: underline;
+}
+
+/* Social media buttons */
+#contact .btn-outline-primary {
+  border: 2px solid #0077b5;
+  color: #0077b5;
+  transition: 0.3s ease-in-out;
+}
+
+#contact .btn-outline-primary:hover {
+  background-color: #0077b5;
+  color: #ffffff;
+}
+
+#contact .btn-outline-dark {
+  border: 2px solid #6e5494;
+  color: #6e5494;
+  transition: 0.3s ease-in-out;
+}
+
+#contact .btn-outline-dark:hover {
+  background-color: #6e5494;
+  color: #ffffff;
+}
+
+/* Responsive styling */
+/* "When the screen size gets smaller (768px or narrower), apply these styles." */
+
+@media (max-width: 768px) {
+  #contact {
+    padding: 20px;
+  }
+
+  #contact_inside_div {
+    padding: 15px;
+  }
+
+  #contact h1 {
+    font-size: 28px;
+  }
+
+  #contact h2 {
+    font-size: 22px;
+  }
+
+  #contact p {
+    font-size: 14px;
+  }
+}
