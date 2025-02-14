@@ -1,0 +1,50 @@
+{% include "header.html" %}
+<section class="card-body">
+  <div class="card text-center">
+    <h1>Robot Framework Overview</h1>
+    <p>
+      Robot Framework is an <b>open-source test automation framework</b> that uses a <b>keyword-driven approach</b> to create and execute test cases. It supports various testing needs, making it versatile and suitable for different projects.
+    </p>
+
+    <h2>Use Cases</h2>
+    <ul>
+      <li><b>Web UI Testing:</b> Automates browser actions using SeleniumLibrary.</li>
+      <li><b>API Testing:</b> Verifies REST/SOAP APIs with tools like RequestsLibrary.</li>
+      <li><b>Desktop App Testing:</b> Supports automation using tools like AutoIt.</li>
+      <li><b>Mobile App Testing:</b> Uses Appium for mobile testing.</li>
+      <li><b>Database Testing:</b> Ensures database integrity using DatabaseLibrary.</li>
+    </ul>
+
+    <h2>Advantages</h2>
+    <p>Robot Framework stands out due to its flexibility and ease of use:</p>
+    <ul>
+      <li>Supports cross-platform testing.</li>
+      <li>Integrates seamlessly with CI/CD pipelines.</li>
+      <li>Offers extensive libraries and a vibrant community.</li>
+      <li>Readable syntax makes it beginner-friendly.</li>
+    </ul>
+
+    <h2>Sample Test Case</h2>
+    <pre>
+*** Settings ***
+Library           SeleniumLibrary
+
+*** Variables ***
+${URL}            https://example.com
+
+*** Test Cases ***
+Verify Page Title
+    Open Browser    ${URL}    chrome
+    Title Should Be    Example Domain
+    Close Browser
+    </pre>
+
+    <h2>Conclusion</h2>
+    <p>
+      Whether you’re working on web applications, APIs, or databases, Robot Framework provides a reliable and efficient solution for test automation. Its keyword-driven nature and extensive library support make it a top choice for both beginners and experienced testers.
+    </p>
+  </div>
+</section>
+
+
+{% include "footer.html" %}

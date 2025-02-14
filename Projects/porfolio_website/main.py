@@ -18,7 +18,9 @@ def portfolio():
 def contact():
     return render_template("contact.html")
 
-
+@app.route('/robot-framework')
+def testing():
+    return render_template("testing.html")
 
 
 

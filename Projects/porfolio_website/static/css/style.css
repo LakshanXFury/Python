@@ -255,3 +255,78 @@ footer {
     font-size: 14px;
   }
 }
+
+/* Testing- Robot */
+/* General Styling */
+.card-body {
+  background-color: #f4f4f9;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  height: 100vh; /* Ensures full viewport height */
+  text-align: center; /* Centers text within elements */
+}
+
+.card {
+  max-width: 800px; /* Optional: Limits the width of the content */
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Heading Styles */
+.card h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-top: 20px;
+  color: #007bff;
+}
+
+/* Paragraph and List Styling */
+.card p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555555;
+}
+
+.card ul {
+  list-style-type: disc;
+  margin: 10px 0 20px 20px;
+  color: #555555;
+  text-align: left;
+}
+
+.card pre {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+  text-align: left;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .card h1 {
+    font-size: 28px;
+  }
+
+  .card h2 {
+    font-size: 20px;
+  }
+
+  .card p, .card ul {
+    font-size: 14px;
+  }
+}

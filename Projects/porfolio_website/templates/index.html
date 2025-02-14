@@ -3,7 +3,7 @@
  <!-- Title -->
 <section id="title" class="gradient-background">
     <div class="px-4 py-5 my-5 text-center">
-        <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <img class="img-fluid rounded-circle" src="{{ url_for('static', filename='assets/img/thorfinn.jpg') }}" alt="Profile Image" style="width: 120px; height: 120px;">
         <h1 class="display-5 fw-bold text-body-emphasis">Front-end Development</h1>
         <div class="col-lg-6 mx-auto">
           <p class="lead mb-4">Hi. I'm Lakshan, A Web Developer with 2 years commercial experience creating successful websites.</p>
@@ -27,7 +27,7 @@
           <div class="feature col">
             <h3 class="fs-2 text-body-emphasis">Automation Testing</h3>
             <p>Robot Framework is an open-source automation testing tool that uses a keyword-driven approach, making it user-friendly and suitable for testers with varying levels of programming knowledge.</p>
-            <a href="#" class="icon-link">
+            <a href="{{ url_for('testing') }}" class="icon-link">
                 Click here To know more
             </a>
           </div>
