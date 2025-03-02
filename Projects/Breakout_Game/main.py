@@ -10,7 +10,14 @@ screen.tracer(0)  # Zero Dotted lines
 bar = Bar((-100, -250))  # Move to bottom (adjust based on window size)
 
 
+screen.listen()
+screen.onkey(bar.go_left, key="Left")
+screen.onkey(bar.go_right, key="Right")
 
+# Main game loop
+game_is_on = True
+while game_is_on:
+    screen.update()  # Refresh screen continuously
 
 
 
