@@ -9,5 +9,3 @@ class Brick(Turtle):
         self.shapesize(stretch_wid=1, stretch_len=3)  # Adjust size
         self.penup()
         self.goto(position)
-
-
