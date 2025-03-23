@@ -57,7 +57,7 @@ def home():
     result = db.session.execute(db.select(Cafe).order_by(Cafe.name))
     # Use .scalars() to get the elements rather than entire rows from the database
     all_cafes = result.scalars().all()
-    return render_template("index.html", cafes = all_cafes)
+    return render_template("index.html", cafes=all_cafes)
 
 
 # HTTP GET - Read Record
