@@ -60,7 +60,7 @@ def get_all_cafe():
 
 @app.route("/add", methods=["POST"])
 def add_cafe():
-    cafe_form = NewCafe
+    cafe_form = NewCafe()
 
     if cafe_form.validate_on_submit():
         new_cafe = Cafe(
