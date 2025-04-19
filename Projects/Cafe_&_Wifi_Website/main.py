@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect,url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
@@ -8,13 +8,17 @@ from form import NewCafe
 app = Flask(__name__)
 Bootstrap5(app)
 
+
 # CREATE DB
 class Base(DeclarativeBase):
     pass
+
+
 # Connect to Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+
 
 # Cafe TABLE Configuration
 class Cafe(db.Model):
@@ -58,32 +62,27 @@ def get_all_cafe():
     all_cafes = result.scalars().all()
     return render_template("index.html", cafes=all_cafes)
 
+
 @app.route("/add", methods=["POST"])
 def add_cafe():
     cafe_form = NewCafe()
 
     if cafe_form.validate_on_submit():
         new_cafe = Cafe(
-            name = cafe_form.name.data,
-            map_url = cafe_form.map_url.data,
-            img_url = cafe_form.image_url.data,
-            location = cafe_form.location.data,
-            has_sockets = cafe_form.sockets.data,
-            has_wifi = cafe_form.wifi.data,
-            can_take_calls = cafe_form.take_calls.data,
-            seats = cafe_form.seats.data,
-            coffee_price = cafe_form.coffee_price.data
+            name=cafe_form.name.data,
+            map_url=cafe_form.map_url.data,
+            img_url=cafe_form.image_url.data,
+            location=cafe_form.location.data,
+            has_sockets=cafe_form.sockets.data,
+            has_wifi=cafe_form.wifi.data,
+            can_take_calls=cafe_form.take_calls.data,
+            seats=cafe_form.seats.data,
+            coffee_price=cafe_form.coffee_price.data
         )
         db.session.add(new_cafe)
         db.session.commit()
         return redirect(url_for("get_all_cafe"))
     return render_template("", form=cafe_form)
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Cafe & Wifi Website</title>
-  <!-- Load Bootstrap-Flask CSS here -->
-    {{ bootstrap.load_css() }}
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-</head>
-<body class="bg-light py-5">
+{% include "header.html" %}
 
   <div class="container text-center mb-4">
-    <h1 class="text-primary">Welcome to the Cafe & Wifi Website</h1>
+    <h1 class="text-primary">Welcome to the Cafe & Wi-Fi Website</h1>
   </div>
   {% for cafe in cafes %}
   <div class="container">
@@ -22,3 +13,5 @@
   {% endfor %}
 </body>
 </html>
+
+{% include "footer.html" %}
