@@ -15,9 +15,13 @@ class Base(DeclarativeBase):
 
 
 # Connect to Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+
+#Secret Key for CSRF
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 
 
 # Cafe TABLE Configuration
@@ -28,10 +32,10 @@ class Cafe(db.Model):
     img_url: Mapped[str] = mapped_column(String(500), nullable=False)
     location: Mapped[str] = mapped_column(String(250), nullable=False)
     seats: Mapped[str] = mapped_column(String(250), nullable=False)
-    has_toilet: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    has_wifi: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    has_sockets: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    can_take_calls: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    has_toilet: Mapped[bool] = mapped_column(Integer, nullable=False)
+    has_wifi: Mapped[bool] = mapped_column(Integer, nullable=False)
+    has_sockets: Mapped[bool] = mapped_column(Integer, nullable=False)
+    can_take_calls: Mapped[bool] = mapped_column(Integer, nullable=False)
     coffee_price: Mapped[str] = mapped_column(String(250), nullable=True)
 
     def to_dict(self):
@@ -60,10 +64,10 @@ def get_all_cafe():
     result = db.session.execute(db.select(Cafe).order_by(Cafe.name))
     # Use .scalars() to get the elements rather than entire rows from the database
     all_cafes = result.scalars().all()
-    return render_template("index.html", cafes=all_cafes)
+    return render_template("index.html", cafes=all_cafes)  # 1 is TRUE and 0 is FALSE
 
 
-@app.route("/add", methods=["POST"])
+@app.route("/add-cafe", methods=["GET", "POST"])
 def add_cafe():
     cafe_form = NewCafe()
 
@@ -73,16 +77,17 @@ def add_cafe():
             map_url=cafe_form.map_url.data,
             img_url=cafe_form.image_url.data,
             location=cafe_form.location.data,
-            has_sockets=cafe_form.sockets.data,
-            has_wifi=cafe_form.wifi.data,
-            can_take_calls=cafe_form.take_calls.data,
+            has_sockets=int(cafe_form.sockets.data),
+            has_wifi=int(cafe_form.wifi.data),
+            can_take_calls=int(cafe_form.take_calls.data),
+            has_toilet=int(cafe_form.toilets.data),
             seats=cafe_form.seats.data,
             coffee_price=cafe_form.coffee_price.data
         )
         db.session.add(new_cafe)
         db.session.commit()
         return redirect(url_for("get_all_cafe"))
-    return render_template("", form=cafe_form)
+    return render_template("add_cafe.html", form=cafe_form)
 
 
 if __name__ == '__main__':

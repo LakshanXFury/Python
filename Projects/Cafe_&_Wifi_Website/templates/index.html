@@ -1,17 +1,44 @@
 {% include "header.html" %}
 
-  <div class="container text-center mb-4">
-    <h1 class="text-primary">Welcome to the Cafe & Wi-Fi Website</h1>
-  </div>
-  {% for cafe in cafes %}
-  <div class="container">
-    <div class="content-box d-flex align-items-center justify-content-center gap-5 flex-wrap p-5 bg-white rounded shadow">
+
+{% for cafe in cafes %}
+<div class="container">
+  <div class="row bg-white rounded shadow p-4 align-items-center">
+
+    <!-- Left: Cafe Name and Image -->
+    <div class="col-md-4 text-center mb-3 mb-md-0">
       <p class="fs-4 fw-bold m-0">{{ cafe.name }}</p>
       <img src="{{ cafe.img_url }}" alt="Cafe Image" width="300" height="200" class="rounded">
     </div>
+
+    <!-- Right: 4 Feature Columns -->
+
+<!-- Jinja IF else condition : “If cafe.has_sockets is True, show ✅. Otherwise, show ❌.”-->
+    <div class="col-md-8">
+      <div class="row text-center">
+        <div class="col-6 col-md-3">
+          <p class="fw-semibold">Sockets</p>
+          <p>{{ '✅' if cafe.has_sockets else '❌' }}</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <p class="fw-semibold">WiFi</p>
+          <p>{{ '✅' if cafe.has_wifi else '❌' }}</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <p class="fw-semibold">Can Take Calls</p>
+          <p>{{ '✅' if cafe.can_take_calls else '❌' }}</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <p class="fw-semibold">Toilets</p>
+          <p>{{ '✅' if cafe.has_toilet else '❌' }}</p>
+        </div>
+      </div>
+    </div>
+
   </div>
-  {% endfor %}
-</body>
-</html>
+</div>
+
+
+{% endfor %}
 
 {% include "footer.html" %}
