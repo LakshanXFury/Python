@@ -1,0 +1,54 @@
+{% include "header.html" %}
+
+<!--Using Flask Flash-->
+
+<div class="container my-5 text-center">
+  <h2 class="mb-4 text-danger">Which cafe do you want to Delete?</h2>
+
+  <!-- Flashed messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Delete Form -->
+  <form method="POST" class="mx-auto" style="max-width: 400px;">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control text-center") }}
+    </div>
+    {{ form.submit(class="btn btn-danger") }}
+  </form>
+</div>
+
+
+<!--<div class="container my-5 text-center">-->
+<!--  <h2 class="mb-4 text-danger">Which cafe do you want to delete?</h2>-->
+
+<!--  &lt;!&ndash; Centered small form box &ndash;&gt;-->
+<!--  <div class="mx-auto" style="max-width: 400px;">-->
+<!--    <form method="POST">-->
+<!--      {{ form.hidden_tag() }}-->
+
+<!--      <div class="mb-3">-->
+<!--        {{ form.name.label(class="form-label") }}-->
+<!--        {{ form.name(class="form-control") }}-->
+<!--      </div>-->
+
+<!--      {{ form.submit(class="btn btn-danger") }}-->
+<!--    </form>-->
+
+<!--    {% if not_found %}-->
+<!--      <div class="alert alert-warning mt-3">No cafe found with that name.</div>-->
+<!--    {% endif %}-->
+<!--  </div>-->
+<!--</div>-->
+
+{% include "footer.html" %}

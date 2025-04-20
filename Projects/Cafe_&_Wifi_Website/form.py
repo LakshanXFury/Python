@@ -15,3 +15,8 @@ class NewCafe(FlaskForm):
     seats = StringField("No of approximate seats available in the premises", validators=[DataRequired()])
     coffee_price = StringField("Avg Coffee price in that cafe", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class DeleteCafe(FlaskForm):
+    name = StringField("Name of the Cafe you want to Delete", validators=[DataRequired()])
+    submit = SubmitField("Delete Cafe")

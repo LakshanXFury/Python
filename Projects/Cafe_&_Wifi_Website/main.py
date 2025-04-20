@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
 from flask_bootstrap import Bootstrap5
-from form import NewCafe
+from form import NewCafe, DeleteCafe
 
 app = Flask(__name__)
 Bootstrap5(app)
@@ -88,6 +88,41 @@ def add_cafe():
         db.session.commit()
         return redirect(url_for("get_all_cafe"))
     return render_template("add_cafe.html", form=cafe_form)
+
+
+@app.route("/delete", methods=["GET", "POST"])
+def delete_cafe():
+    # cafe_form = DeleteCafe()
+    # if cafe_form.validate_on_submit():
+    #     cafe_to_delete = db.session.execute(db.select(Cafe).where(Cafe.name == cafe_form.name.data)).scalar_one_or_none()
+    #
+    #     if cafe_to_delete:
+    #         db.session.delete(cafe_to_delete)
+    #         db.session.commit()
+    #         return redirect(url_for("get_all_cafe"))
+    #     else:
+    #         return render_template("delete_cafe.html", form=cafe_form, not_found=True)
+    #
+    # return render_template("delete_cafe.html", form=cafe_form)
+
+    # Using Flask Flash
+    cafe_form = DeleteCafe()
+    not_found = False
+
+    if cafe_form.validate_on_submit():
+        cafe_name = cafe_form.name.data
+        cafe_to_delete = db.session.execute(db.select(Cafe).where(Cafe.name == cafe_name)).scalar()
+
+        if cafe_to_delete:
+            db.session.delete(cafe_to_delete)
+            db.session.commit()
+            flash(f"Cafe '{cafe_name}' was deleted successfully!", "success")
+            return redirect(url_for("get_all_cafe"))  # Redirect to list page
+        else:
+            flash(f"No cafe found with the name '{cafe_name}'.", "warning")
+            not_found = True
+
+    return render_template("delete_cafe.html", form=cafe_form, not_found=not_found)
 
 
 if __name__ == '__main__':
