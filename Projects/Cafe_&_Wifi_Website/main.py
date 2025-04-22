@@ -1,12 +1,17 @@
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
 from flask_bootstrap import Bootstrap5
 from form import NewCafe, DeleteCafe
+from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 
 app = Flask(__name__)
 Bootstrap5(app)
+
+# Configure Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # CREATE DB
@@ -59,7 +64,7 @@ with app.app_context():
 
 @app.route("/")
 def get_all_cafe():
-    ##READ ALL RECORDS
+    # READ ALL RECORDS
     # Construct a query to select from the database. Returns the rows in the database
     result = db.session.execute(db.select(Cafe).order_by(Cafe.name))
     # Use .scalars() to get the elements rather than entire rows from the database
