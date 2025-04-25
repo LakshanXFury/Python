@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, URLField, BooleanField
+from wtforms import StringField, SubmitField, URLField, BooleanField, PasswordField, EmailField
 from wtforms.validators import DataRequired
 
 
@@ -20,3 +20,18 @@ class NewCafe(FlaskForm):
 class DeleteCafe(FlaskForm):
     name = StringField("Name of the Cafe you want to Delete", validators=[DataRequired()])
     submit = SubmitField("Delete Cafe")
+
+
+# Create a form to register new users
+class RegisterForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    email = EmailField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Sign Me Up!")
+
+
+# Create a form to login existing users
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Let Me In!")
