@@ -82,6 +82,9 @@ with app.app_context():
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        # If I try to access Delete or Add Cafe, instead of crashing it redirects to Login
+        if not current_user.is_authenticated:
+            return redirect(url_for('login'))
         # If id is not 1 then return abort with 403 error
         if current_user.id != 1:
             return abort(403)
@@ -102,6 +105,7 @@ def get_all_cafe():
 
 
 @app.route("/add-cafe", methods=["GET", "POST"])
+@admin_only
 def add_cafe():
     cafe_form = NewCafe()
 
@@ -125,6 +129,7 @@ def add_cafe():
 
 
 @app.route("/delete", methods=["GET", "POST"])
+@admin_only
 def delete_cafe():
     # cafe_form = DeleteCafe()
     # if cafe_form.validate_on_submit():
@@ -159,7 +164,7 @@ def delete_cafe():
     return render_template("delete_cafe.html", form=cafe_form, not_found=not_found)
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -186,11 +191,19 @@ def register():
         db.session.commit()
         # This line will authenticate the user with Flask-Login
         login_user(new_user)
-        return redirect(url_for("get_all_posts"))
-    return render_template("register.html",form=form, current_user=current_user)
+        return redirect(url_for("get_all_cafe"))
+    return render_template("register.html", form=form, current_user=current_user)
 
 
-@app.route("/login")
+"""
+Admin account email: lakshan@gmail.com
+
+Admin account password: test@123
+
+"""
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -208,8 +221,14 @@ def login():
             return redirect(url_for('login'))
         else:
             login_user(user)
-            return redirect(url_for('get_all_posts'))
+            return redirect(url_for('get_all_cafe'))
     return render_template("login.html", form=form, current_user=current_user)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('get_all_cafe'))
 
 
 if __name__ == '__main__':
