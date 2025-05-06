@@ -21,6 +21,10 @@ last_names = [
 names = []
 used_combinations = set()
 while len(names) < 200:
+    """
+    If True is selected → it picks a male name and sets:
+    If False is selected → it picks a female name and sets:
+    """
     if random.choice([True, False]):
         salutation = "SAL_MR"
         first = random.choice(male_first_names)
