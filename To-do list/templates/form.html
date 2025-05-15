@@ -1,0 +1,17 @@
+<div class="container my-5">
+  <h2 class="mb-4 text-center text-primary">Add a New Cafe</h2>
+  <form method="POST" novalidate>
+
+
+      <div class="mb-3">
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.map_url.label(class="form-label") }}
+      {{ form.map_url(class="form-control") }}
+    </div>
+
+  </form>
+</div>

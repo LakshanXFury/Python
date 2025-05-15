@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>To-Do Website</title>
+    <link rel="icon" href="static/list-check.svg" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<!--Header-->
+<div class="container-fluid">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
+                <i class="bi bi-check2-square" style="font-size: 2rem; color: blue;"></i>
+                <span class="ms-2 fs-4">To-Do Website</span>
+            </a>
+        </div>
+    </header>
+</div>
+
+<!--Bod-->
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <!-- min-vh-100 means minimum 100% height of the viewport, and align-items-center centers it vertically. -->
+    <div class="list-group p-4 rounded shadow" style="max-width: 600px; width: 100%; font-size: 1.25rem;">
+
+        <!-- Task 1 -->
+        <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" checked style="transform: scale(1.5);">
+            <span class="pt-1 form-checked-content">
+                <strong>Finish sales report</strong>
+                <small class="d-block text-body-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                    </svg>
+                    1:00–2:00pm
+                </small>
+            </span>
+        </label>
+
+        <!-- Task 2 -->
+        <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" style="transform: scale(1.5);">
+            <span class="pt-1 form-checked-content">
+                <strong>Out of office</strong>
+                <small class="d-block text-body-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                    </svg>
+                    Tomorrow
+                </small>
+            </span>
+        </label>
+
+        <!-- Add New Task -->
+        <label class="list-group-item d-flex gap-3 ">
+            <input class="form-check-input form-check-input-placeholder bg-body-tertiary flex-shrink-0 pe-none" disabled type="checkbox" style="transform: scale(1.5);">
+            <span class="pt-1 form-checked-content">
+                <span contenteditable="true" class="w-100">Add new task...</span>
+                <small class="d-block text-body-secondary">
+                    <svg class="bi me-1" width="1.5em" height="1.5em" aria-hidden="true">
+                        <use xlink:href="#list-check"></use>
+                    </svg>
+                    Choose list...
+                </small>
+            </span>
+        </label>
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
