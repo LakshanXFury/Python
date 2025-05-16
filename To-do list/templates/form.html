@@ -1,16 +1,31 @@
+{% include "header.html" %}
+
+
 <div class="container my-5">
-  <h2 class="mb-4 text-center text-primary">Add a New Cafe</h2>
+  <h2 class="mb-4 text-center text-primary">Add a To-Do List</h2>
   <form method="POST" novalidate>
+      <!--    ✅ {{ form.hidden_tag() }}-->
+      <!--    This is used in Flask-WTF forms to render hidden fields, especially the CSRF token, which helps prevent Cross-Site Request Forgery attacks.-->
+    {{ form.hidden_tag() }}
 
 
-      <div class="mb-3">
-      {{ form.name.label(class="form-label") }}
-      {{ form.name(class="form-control") }}
+    <div class="mb-3">
+      {{ form.data_field.label(class="form-label") }}
+      {{ form.data_field(class="form-control") }}
     </div>
 
     <div class="mb-3">
-      {{ form.map_url.label(class="form-label") }}
-      {{ form.map_url(class="form-control") }}
+      {{ form.time_field.label(class="form-label") }}
+      {{ form.time_field(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.date_field.label(class="form-label") }}
+      {{ form.date_field(class="form-control") }}
+    </div>
+
+    <div class="text-center">
+        {{ form.submit(class="btn btn-primary") }}
     </div>
 
   </form>
