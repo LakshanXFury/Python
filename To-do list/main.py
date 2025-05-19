@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, redirect, url_for, abort
+from flask import Flask, flash, render_template, redirect, url_for, jsonify, request
 from flask_bootstrap import Bootstrap5
 from form import NewTodo
 from flask_sqlalchemy import SQLAlchemy
@@ -33,8 +33,8 @@ class List(db.Model):
 
 #  Database Initialization (only run once)
 # Ensure you run this once (maybe in a separate script or shell) to create your tables before inserting data:
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 @app.route("/")
@@ -52,7 +52,8 @@ def new_todo():
     form = NewTodo()
     if form.validate_on_submit():
         formatted_date = form.date_field.data.strftime("%d-%m-%Y")
-        print(type(formatted_date))  # This will print: 24-05-2025 strftime() function lets us convert a datetime object into a formatted string using special format codes.
+        print(type(
+            formatted_date))  # This will print: 24-05-2025 strftime() function lets us convert a datetime object into a formatted string using special format codes.
 
         formatted_time = form.time_field.data.strftime("%H:%M")
 
@@ -64,13 +65,30 @@ def new_todo():
 
         db.session.add(new_list)
         db.session.commit()
-        flash("New task added successfully!", "success")
         return redirect(url_for("home"))
 
     return render_template("form.html", form=form)
 
 
-def delete():
+# @app.route("/<int:return_id>", methods=["POST"])
+# def delete(return_id):
+#     list_to_delete = db.session.execute(db.select(List).where(List.id == return_id)).scalar()
+#     db.session.delete(list_to_delete)
+#     db.session.commit()
+#     flash("The list was deleted successfully!", "success")
+#
+#     return redirect(url_for("home"))
+
+# Using AJAX(Asynchronous JavaScript and XML) Route to refresh
+@app.route("/delete/<int:return_id>", methods=["POST"])
+def delete(return_id):
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        list_to_delete = db.session.execute(db.select(List).where(List.id == return_id)).scalar()
+        if list_to_delete:
+            db.session.delete(list_to_delete)
+            db.session.commit()
+            return jsonify({"success": True})
+        return jsonify({"success": False}), 404
     return redirect(url_for("home"))
 
 

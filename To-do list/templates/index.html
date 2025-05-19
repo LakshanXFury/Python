@@ -1,58 +1,157 @@
-{% include "header.html" %}
+<!--{% include "header.html" %}-->
 
-<!--Bod-->
-<div class="d-flex justify-content-center align-items-center min-vh-100">
-    <!-- min-vh-100 means minimum 100% height of the viewport, and align-items-center centers it vertically. -->
-    <div class="list-group p-4 rounded shadow" style="max-width: 600px; width: 100%; font-size: 1.25rem;">
 
-    {% for list in to_list %}
-        <!-- Task 1 -->
-        <label class="list-group-item d-flex gap-3">
-            <input class="form-check-input flex-shrink-0" type="checkbox"  style="transform: scale(1.5);">
-            <span class="pt-1 form-checked-content">
-                <strong>{{list.data_field}}</strong>
-                <small class="d-block text-body-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                    </svg>
-                    {{list.time_field}} - {{list.date_field}}
-                </small>
-            </span>
-        </label>
+<!--{% with messages = get_flashed_messages(with_categories=true) %}-->
+<!--  {% if messages %}-->
+<!--    <div class="container mt-3">-->
+<!--      {% for category, message in messages %}-->
+<!--        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">-->
+<!--          {{ message }}-->
+<!--          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--        </div>-->
+<!--      {% endfor %}-->
+<!--    </div>-->
+<!--  {% endif %}-->
+<!--{% endwith %}-->
 
-        <!-- Task 2 -->
+<!--&lt;!&ndash;Bod&ndash;&gt;-->
+<!--<div class="d-flex justify-content-center align-items-center min-vh-100">-->
+<!--    &lt;!&ndash; min-vh-100 means minimum 100% height of the viewport, and align-items-center centers it vertically. &ndash;&gt;-->
+<!--    <div class="list-group p-4 rounded shadow" style="max-width: 600px; width: 100%; font-size: 1.25rem;">-->
+
+<!--    {% for list in to_list %}-->
+<!--        &lt;!&ndash; Task 1 &ndash;&gt;-->
+<!--        <form action="{{ url_for('delete', return_id=list.id) }}" method="post" style="display: inline;">-->
 <!--        <label class="list-group-item d-flex gap-3">-->
-<!--            <input class="form-check-input flex-shrink-0" type="checkbox" style="transform: scale(1.5);">-->
+<!--            <input class="form-check-input flex-shrink-0" type="checkbox"  style="transform: scale(1.5);" onclick="this.form.submit();">-->
 <!--            <span class="pt-1 form-checked-content">-->
-<!--                <strong>Out of office</strong>-->
+<!--                <strong>{{list.data_field}}</strong>-->
 <!--                <small class="d-block text-body-secondary">-->
 <!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">-->
 <!--                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>-->
 <!--                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>-->
 <!--                    </svg>-->
-<!--                    Tomorrow-->
+<!--                    {{list.time_field}} - {{list.date_field}}-->
 <!--                </small>-->
 <!--            </span>-->
 <!--        </label>-->
+<!--        </form>-->
 
-        {% endfor %}
+<!--        &lt;!&ndash; Task 2 &ndash;&gt;-->
+<!--&lt;!&ndash;        <label class="list-group-item d-flex gap-3">&ndash;&gt;-->
+<!--&lt;!&ndash;            <input class="form-check-input flex-shrink-0" type="checkbox" style="transform: scale(1.5);">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="pt-1 form-checked-content">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong>Out of office</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                <small class="d-block text-body-secondary">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;                    Tomorrow&ndash;&gt;-->
+<!--&lt;!&ndash;                </small>&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </label>&ndash;&gt;-->
+
+<!--        {% endfor %}-->
 
 
-        <!-- Add New Task -->
-        <label class="list-group-item d-flex gap-3 ">
-            <a href="{{ url_for('new_todo') }}" class="d-flex gap-3 text-decoration-none text-reset">
-            <input class="form-check-input form-check-input-placeholder bg-body-tertiary flex-shrink-0 pe-none" disabled type="checkbox" style="transform: scale(1.5);">
-            <span class="pt-1 form-checked-content">
-                <span contenteditable="true" class="w-100">Add new task...</span>
-                <small class="d-block text-body-secondary">
-                    <svg class="bi me-1" width="1.5em" height="1.5em" aria-hidden="true">
-                        <use xlink:href="#list-check"></use>
-                    </svg>
-                    Choose list...
-                </small>
-            </span>
-            </a>
-        </label>
+<!--        &lt;!&ndash; Add New Task &ndash;&gt;-->
+<!--        <label class="list-group-item d-flex gap-3 ">-->
+<!--            <a href="{{ url_for('new_todo') }}" class="d-flex gap-3 text-decoration-none text-reset">-->
+<!--            <input class="form-check-input form-check-input-placeholder bg-body-tertiary flex-shrink-0 pe-none" disabled type="checkbox" style="transform: scale(1.5);">-->
+<!--            <span class="pt-1 form-checked-content">-->
+<!--                <span contenteditable="true" class="w-100">Add new task...</span>-->
+<!--                <small class="d-block text-body-secondary">-->
+<!--                    <svg class="bi me-1" width="1.5em" height="1.5em" aria-hidden="true">-->
+<!--                        <use xlink:href="#list-check"></use>-->
+<!--                    </svg>-->
+<!--                    Choose list...-->
+<!--                </small>-->
+<!--            </span>-->
+<!--            </a>-->
+<!--        </label>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--Using AJAX Functionality-->
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
     </div>
+  {% endif %}
+{% endwith %}
+
+<!-- Main To-Do Section -->
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="list-group p-4 rounded shadow" style="max-width: 600px; width: 100%; font-size: 1.25rem;">
+
+    {% for list in to_list %}
+    <!-- Task Item -->
+    <label class="list-group-item d-flex gap-3" id="task-{{ list.id }}">
+      <input class="form-check-input flex-shrink-0" type="checkbox" style="transform: scale(1.5);"
+             onclick="deleteTask({{ list.id }})">
+      <span class="pt-1 form-checked-content">
+        <strong>{{ list.data_field }}</strong>
+        <small class="d-block text-body-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-clock" viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+          </svg>
+          {{ list.time_field }} - {{ list.date_field }}
+        </small>
+      </span>
+    </label>
+    {% endfor %}
+
+    <!-- Add New Task -->
+    <label class="list-group-item d-flex gap-3">
+      <a href="{{ url_for('new_todo') }}" class="d-flex gap-3 text-decoration-none text-reset w-100">
+        <input class="form-check-input form-check-input-placeholder bg-body-tertiary flex-shrink-0 pe-none" disabled type="checkbox" style="transform: scale(1.5);">
+        <span class="pt-1 form-checked-content">
+          <span contenteditable="true" class="w-100">Add new task...</span>
+          <small class="d-block text-body-secondary">
+            <svg class="bi me-1" width="1.5em" height="1.5em" aria-hidden="true">
+              <use xlink:href="#list-check"></use>
+            </svg>
+            Choose list...
+          </small>
+        </span>
+      </a>
+    </label>
+
+  </div>
 </div>
+
+<!-- AJAX JavaScript -->
+<script>
+  function deleteTask(taskId) {
+    fetch(`/delete/${taskId}`, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const taskElement = document.getElementById(`task-${taskId}`);
+        if (taskElement) taskElement.remove();
+      } else {
+        alert("Failed to delete task.");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("Something went wrong while deleting.");
+    });
+  }
+</script>
