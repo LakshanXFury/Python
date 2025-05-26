@@ -17,6 +17,7 @@ def find_second_largest(arr):
     return second_largest
 
 
+
 # Example usage
 arr = [10, 5, 20, 8, 20]
 print("Second largest number is:", find_second_largest(arr))
