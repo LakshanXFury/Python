@@ -3,6 +3,7 @@ from tkinter import *
 
 def on_keypress(event):
     # Cancel the previous timer if it exists
+    # This checks if the timer exists and cancels it before starting a new one — this is how you reset the timer every time the user types.
     if hasattr(window, 'typing_timer'):  # This attribute returns true or false
         window.after_cancel(window.typing_timer)  # Cancels the previous time to reset the countdown
     # Start a new timer (5000 ms = 5 seconds)
@@ -31,7 +32,7 @@ text_input.pack()
 text_input.bind("<Key>", on_keypress)
 
 # Start the timer even if the user doesn't type
-window.typing_timer = window.after(5000, user_stopped_typing)
+window.typing_timer = window.after(5000, user_stopped_typing)  #Stores the ID of that scheduled task in window.typing_timer.
 
 
 window.mainloop()
