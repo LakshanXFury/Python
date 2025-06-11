@@ -56,3 +56,56 @@ Verify if the items in cart
 
     should be equal    ${extracted_element1}    ${element1}
     should be equal    ${extracted_element2}    ${element2}
+
+
+#✅ Option 1: Use a Dictionary
+#You can return a dictionary from your Add 2 items keyword and access values by keys.
+#
+#✅ Modified Add 2 items Keyword:
+#robot
+#Copy
+#Edit
+#Add 2 items
+#    wait until element is visible    (//div[@class="inventory_item"]//button)[1]    5s
+#    click element    (//div[@class="inventory_item"]//button)[1]
+#    click element    (//div[@class="inventory_item"]//button)[2]
+#
+#    ${item1}=    get text    (//div[@class="inventory_item"]//div[@class="inventory_item_label"]/a/div)[1]
+#    ${item2}=    get text    (//div[@class="inventory_item"]//div[@class="inventory_item_label"]/a/div)[2]
+#
+#    &{items}=    Create Dictionary    item1=${item1}    item2=${item2}
+#    [Return]    &{items}
+#✅ Test Case Update:
+#robot
+#Copy
+#Edit
+#*** Test Cases ***
+#Sauce Demo
+#    Login    ${URL}    ${BROWSER}
+#    Reset the App State
+#    &{items}=    Add 2 items
+#    Verify if the items in cart    ${items.item1}    ${items.item2}
+#✅ Option 2: Use a List
+#Add 2 items Keyword:
+#robot
+#Copy
+#Edit
+#Add 2 items
+#    click element    (//div[@class="inventory_item"]//button)[1]
+#    click element    (//div[@class="inventory_item"]//button)[2]
+#
+#    ${item1}=    get text    (//div[@class="inventory_item"]//div[@class="inventory_item_label"]/a/div)[1]
+#    ${item2}=    get text    (//div[@class="inventory_item"]//div[@class="inventory_item_label"]/a/div)[2]
+#
+#    @{items}=    Create List    ${item1}    ${item2}
+#    [Return]    @{items}
+#Test Case:
+#robot
+#Copy
+#Edit
+#*** Test Cases ***
+#Sauce Demo
+#    Login    ${URL}    ${BROWSER}
+#    Reset the App State
+#    @{items}=    Add 2 items
+#    Verify if the items in cart    ${items[0]}    ${items[1]}
