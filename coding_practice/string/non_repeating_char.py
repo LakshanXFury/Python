@@ -7,6 +7,8 @@ def non_char(string):
 
     }
 
+    found = False
+
     for i in s:
         # print(i)
         if i not in repeating_char:
@@ -18,7 +20,11 @@ def non_char(string):
     for i in s:
         if repeating_char[i] == 1:
             print(f"This is the first non-repeating character: {i}")
+            found = True
             break
 
+    if not found:
+        print("No non-repeating character found.")
 
-non_char("lakshan")
+
+non_char("malayyalam")
