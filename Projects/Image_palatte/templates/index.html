@@ -22,43 +22,56 @@
       </div>
     </header>
   </div>
-
+<h1> Find the TOP 10 colors in your Uploaded Image</h1>
 <!-- Upload Section -->
-  <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="upload-section w-100" style="max-width: 400px;">
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="upload-section w-100" style="max-width: 550px;">
+    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
       <div class="mb-3">
         <label for="formFile" class="form-label upload-label">Upload the Image</label>
-        <input class="form-control" type="file" id="formFile" />
-    </div>
+        <input class="form-control" type="file" id="formFile" name="image" />
+      </div>
       <div class="text-center mt-3">
-        <button id="uploadBtn" class="btn btn-primary" type="button" disabled>
+        <button id="uploadBtn" class="btn btn-primary" type="submit">
           Upload
         </button>
       </div>
-    </div>
+
+      {% if colors %}
+        <div class="mt-4 text-center">
+          <h6>Top 10 Colors</h6>
+          <div class="d-flex justify-content-center flex-wrap">
+            {% for color in colors %}
+              <div class="me-2 mb-2 border rounded" style="background-color: {{ color }}; width: 40px; height: 40px;" title="{{ color }}"></div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </form>
   </div>
+</div>
 
-  <script>
-  const fileInput = document.getElementById('formFile');
-  const uploadBtn = document.querySelector('uploadBtn');
+<!--  <script>-->
+<!--  const fileInput = document.getElementById('formFile');-->
+<!--  const uploadBtn = document.querySelector('uploadBtn');-->
 
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files.length > 0) {
-      uploadBtn.removeAttribute('disabled');
-      uploadBtn.innerHTML = 'Upload';
-    } else {
-      uploadBtn.setAttribute('disabled', 'true');
-    }
-  });
+<!--  fileInput.addEventListener('change', () => {-->
+<!--    if (fileInput.files.length > 0) {-->
+<!--      uploadBtn.removeAttribute('disabled');-->
+<!--      uploadBtn.innerHTML = 'Upload';-->
+<!--    } else {-->
+<!--      uploadBtn.setAttribute('disabled', 'true');-->
+<!--    }-->
+<!--  });-->
 
-  uploadBtn.addEventListener('click', () => {
-    uploadBtn.setAttribute('disabled', 'true');
-    uploadBtn.innerHTML = `
-      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-      <span role="status">Uploading...</span>
-    `;
-  });
-</script>
+<!--  uploadBtn.addEventListener('click', () => {-->
+<!--    uploadBtn.setAttribute('disabled', 'true');-->
+<!--    uploadBtn.innerHTML = `-->
+<!--      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>-->
+<!--      <span role="status">Uploading...</span>-->
+<!--    `;-->
+<!--  });-->
+<!--</script>-->
 
 </body>
 </html>
