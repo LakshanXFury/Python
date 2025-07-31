@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock API</title>
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+<div class="container-fluid">
+    <header class="d-flex justify-content-center align-items-center py-3 mb-4 border-bottom">
+        <div class="main_text text-center">
+            <a href="{{url_for('home')}}" class="text-decoration-none">
+                <i class="bi bi-arrow-down-left-square-fill" style="font-size: 2rem; color: lightseagreen;"></i>
+                <span class="ms-2 fs-4">Stock API Website</span>
+            </a>
+        </div>
+    </header>
+</div>
+
+<!-- Body  -->
+<form method="GET" action="">
+    <div class="mb-3 text-center">
+        <label for="stockInput" class="form-label fs-5 main_text">
+            Which stock do you want to get the data of ???
+        </label>
+        <input type="text" name="stock" class="form-control mx-auto" id="stockInput" placeholder="Enter stock symbol (e.g., AAPL)" style="max-width: 400px;">
+        <button type="submit" class="btn btn-primary mt-3">Get Data</button>
+    </div>
+</form>
+
+
+<!-- Results -->
+{% if stock_data %}
+<div class="container mt-4 text-center">
+    <h3>Previous Day Stock Data for {{ stock_symbol }}</h3>
+    <p><strong>Open:</strong> {{ stock_data.open }}</p>
+    <p><strong>Close:</strong> {{ stock_data.close }}</p>
+    <p><strong>High:</strong> {{ stock_data.high }}</p>
+    <p><strong>Low:</strong> {{ stock_data.low }}</p>
+    <p><strong>Volume:</strong> {{ stock_data.volume }}</p>
+</div>
+{% endif %}
+
+
+
+</body>
+</html>
