@@ -1,0 +1,29 @@
+body{
+    background-color: lightcyan;
+}
+
+/* Smooth hover underline effect */
+    .hover-link {
+        position: relative;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .hover-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        left: 50%;
+        bottom: 0;
+        background-color: #0d6efd;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hover-link:hover {
+        color: #0d6efd !important;
+    }
+
+    .hover-link:hover::after {
+        width: 100%;
+        left: 0;
+    }
