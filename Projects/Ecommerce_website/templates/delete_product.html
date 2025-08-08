@@ -1,0 +1,18 @@
+{% include "header.html" %}
+
+
+<div class="container my-5">
+  <h2 class="mb-4 text-center text-primary">Which product do you want to Delete ??</h2>
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.product_name.label(class="form-label") }}
+      {{ form.product_name(class="form-control") }}
+    </div>
+
+    <div class="text-center">
+      {{ form.submit_btn(class="btn btn-primary px-4") }}
+    </div>
+
+  </form>
+</div>

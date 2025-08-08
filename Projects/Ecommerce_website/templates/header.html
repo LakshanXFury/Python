@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Website</title>
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+</head>
+<body>
+
+<!-- Header -->
+
+<div class="container-fluid px-4">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+        <!-- Logo + Title -->
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="{{url_for('home')}}" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none">
+                <i class="bi bi-bag-check-fill" style="font-size: 2rem; color: lightseagreen;"></i>
+                <span class="fs-4 ms-2">E-Commerce Website</span>
+            </a>
+        </div>
+
+        <!-- Navigation Menu -->
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item">
+                <a href="{{url_for('home')}}" class="nav-link px-3 text-dark fw-semibold hover-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{url_for('add_product')}}" class="nav-link px-3 text-dark fw-semibold hover-link">Add New Product</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{url_for('delete_product')}}" class="nav-link px-3 text-dark fw-semibold hover-link">Delete a Product</a>
+            </li>
+        </ul>
+
+        <!-- Login & Signup -->
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2">Login</button>
+            <button type="button" class="btn btn-outline-primary">Sign-up</button>
+        </div>
+    </header>
+</div>
+</body>
+</html>

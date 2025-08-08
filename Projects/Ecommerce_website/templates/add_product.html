@@ -1,0 +1,27 @@
+{% include "header.html" %}
+
+<div class="container my-5">
+  <h2 class="mb-4 text-center text-primary">Add a New Product</h2>
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.product_name.label(class="form-label") }}
+      {{ form.product_name(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.product_price.label(class="form-label") }}
+      {{ form.product_price(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.image_of_product.label(class="form-label") }}
+      {{ form.image_of_product(class="form-control") }}
+    </div>
+
+    <div class="text-center">
+      {{ form.submit_btn(class="btn btn-primary px-4") }}
+    </div>
+  </form>
+</div>
