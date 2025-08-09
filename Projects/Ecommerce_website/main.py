@@ -19,7 +19,8 @@ app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 
 # Connect to Database
 app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
+    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite
+# to wait before raising a locked error.
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -63,7 +64,7 @@ def delete_product():
     # You're not seeing p.id in the frontend dropdown because it's not meant to be displayed —
     # it's being used as the value behind the scenes.
     # (value_submitted, label_displayed)
-    
+
     if form.validate_on_submit():
         product_to_delete = Product.query.filter_by(name=form.product_name.data).first()
         if product_to_delete:
