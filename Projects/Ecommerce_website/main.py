@@ -39,7 +39,11 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    # Read all the records
+    result = db.session.execute(db.select(Product).order_by(Product.name))
+    # Use .scalars() to get the elements rather than entire rows from the database
+    all_products = result.scalars().all()
+    return render_template("index.html", products=all_products)
 
 
 @app.route("/add-product", methods=["GET", "POST"])

@@ -1,1 +1,25 @@
 {% include "header.html" %}
+
+
+<div class="container my-4">
+  {% for product in products %}
+  <div class="card shadow-sm border-0">
+    <div class="row g-0 align-items-center">
+      <!-- Image -->
+      <div class="col-auto p-5">
+        <img src="{{product.product_image}}"
+             class="img-fluid rounded product-thumb">
+      </div>
+
+      <!-- Content -->
+      <div class="col p-5 content">
+        <h2 class="mb-3">{{product.name}}</h2>
+        <h4 class="text-muted mb-3">Price: ₹{{product.price}}</h4>
+        <button type="button" class="btn btn-primary btn-lg px-2">
+            Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

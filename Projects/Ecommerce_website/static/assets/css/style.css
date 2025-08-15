@@ -27,3 +27,17 @@ body{
         width: 100%;
         left: 0;
     }
+
+.product-thumb {
+    max-width: 450px;
+    height: auto;
+    object-fit: cover;
+}
+
+.card {
+    background-color: transparent;
+}
+
+.content{
+
+}
