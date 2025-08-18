@@ -1,9 +1,13 @@
+import os
+
 from flask import Flask, request, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
 from form import NewProduct, DeleteProduct
+from dotenv import load_dotenv
+import stripe
 
 app = Flask(__name__)
 Bootstrap5(app)
@@ -35,6 +39,10 @@ class Product(db.Model):
 
 with app.app_context():
     db.create_all()
+
+# 🔑 Stripe keys (use your own test keys from dashboard)
+stripe.api_key = os.getenv("Secret_key")  # Secret Key
+PUBLISHABLE_KEY = os.getenv("Publishable_key")  # Publishable Key
 
 
 @app.route("/")
@@ -77,6 +85,45 @@ def delete_product():
             return redirect(url_for("home"))
 
     return render_template("delete_product.html", form=form)
+
+
+# 🟢 Stripe Checkout Integration
+@app.route("/create-checkout-session/<int:product_id>", methods=["POST"])
+def create_checkout_session(product_id):
+    product = Product.query.get(product_id)
+    if not product:
+        return "Product not found", 404
+
+    try:
+        # Stripe Checkout session
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": product.name},
+                    "unit_amount": int(product.price * 100),  # Stripe expects cents
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url=url_for("success", _external=True),
+            cancel_url=url_for("cancel", _external=True),
+        )
+        return redirect(session.url, code=303)
+
+    except Exception as e:
+        return str(e)
+
+
+@app.route("/success")
+def success():
+    return "✅ Payment successful! Thank you for your purchase."
+
+
+@app.route("/cancel")
+def cancel():
+    return "❌ Payment canceled. Please try again."
 
 
 if __name__ == "__main__":
