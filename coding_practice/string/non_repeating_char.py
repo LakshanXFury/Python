@@ -27,4 +27,4 @@ def non_char(string):
         print("No non-repeating character found.")
 
 
-non_char("malayyalam")
+non_char("malayalam")
