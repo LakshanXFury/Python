@@ -6,11 +6,15 @@ import random
 
 app = Flask(__name__)
 
+
 # CREATE DB
 class Base(DeclarativeBase):
     pass
+
+
 # Connect to Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db?timeout=10'  #This sets a 10-second timeout, allowing SQLite to wait before raising a locked error.
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -96,6 +100,7 @@ def get_random_cafe():
 
     # return render_template("random.html", cafes=random_cafe)
 
+
 @app.route("/all")
 def get_all_cafe():
     result = db.session.execute(db.select(Cafe))
@@ -103,6 +108,7 @@ def get_all_cafe():
 
     # This uses a List Comprehension but you could also split it into 3 lines.
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
+
 
 @app.route("/search")
 def search():
@@ -117,6 +123,7 @@ def search():
     else:
         return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."}), 404
 
+
 # HTTP POST - Create Record
 @app.route("/add", methods=["POST"])
 def post_new_cafe():
@@ -125,9 +132,9 @@ def post_new_cafe():
         map_url=request.form.get("map_url"),
         img_url=request.form.get("img_url"),
         location=request.form.get("loc"),
-        #If it is left empty it returns false which is 0,
-        #Some value is entered it will be true which is 1
-        #In Explicit check, "["false", "0", "no"]" , if false or no is enetered it will return 0
+        # If it is left empty it returns false which is 0,
+        # Some value is entered it will be true which is 1
+        # In Explicit check, "["false", "0", "no"]" , if false or no is entered it will return 0
         has_sockets=bool(request.form.get("sockets")),
         has_toilet=bool(request.form.get("toilet")),
         has_wifi=bool(request.form.get("wifi")) in ["false", "0", "no"],
@@ -151,7 +158,8 @@ def patch_new_price(cafe_id):
         if cafe_to_update:
             cafe_to_update.coffee_price = query_updated_price
             db.session.commit()
-            return jsonify(response={"success": "Successfully updated the price."}), 200  #Numbers in the end is for the response
+            return jsonify(
+                response={"success": "Successfully updated the price."}), 200  # Numbers in the end is for the response
         else:
             return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 400
 
@@ -161,7 +169,8 @@ def patch_new_price(cafe_id):
 def delete_cafe(cafe_id):
     api_key_from_url = request.args.get("api-key")
     if api_key_from_url == api_key:
-        cafe = db.session.get(Cafe, cafe_id)  # Session.get can be used, so that u can add ur custom error message or it will return 404 default error
+        cafe = db.session.get(Cafe,
+                              cafe_id)  # Session.get can be used, so that u can add ur custom error message or it will return 404 default error
         if cafe:
             db.session.delete(cafe)
             db.session.commit()
@@ -176,7 +185,6 @@ def delete_cafe(cafe_id):
 Post Man Documnetation
 https://documenter.getpostman.com/view/37019356/2sAYJ3D1QV
 """
-
 
 if __name__ == '__main__':
     app.run(debug=True)
