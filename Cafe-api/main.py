@@ -182,7 +182,7 @@ def delete_cafe(cafe_id):
 
 
 """
-Post Man Documnetation
+Post Man Documentation
 https://documenter.getpostman.com/view/37019356/2sAYJ3D1QV
 """
 
