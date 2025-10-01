@@ -19,3 +19,4 @@ def anagram(first_word, second_word):
 
 
 anagram("the eyes", "They see")
+anagram("study", "dusty")
