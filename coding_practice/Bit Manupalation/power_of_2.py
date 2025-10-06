@@ -24,7 +24,7 @@ def if_power_of_2(num):
     while num > 1:
         if num % 2 != 0:  # Takes the reminder
             print(f"{num} is not a power of 2.")
-            return
+            return  # stops the function immediately → loop terminates.
         num = num // 2  # Takes the quotient
         print(num)
 
@@ -32,3 +32,4 @@ def if_power_of_2(num):
 
 
 if_power_of_2(8)
+if_power_of_2(12)
