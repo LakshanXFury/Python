@@ -34,8 +34,6 @@ def string_manipulation(string_value):
 
 string_manipulation("hello ? hello , how are you")
 
-
-
 # To remove punctuation using Regular expression
 # Using re (regular expressions, more powerful)
 # import re
