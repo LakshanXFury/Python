@@ -11,7 +11,7 @@ def factorial_num(number):
     return value
 
 
-print(factorial_num(5))
+factorial_num(5)
 factorial_num(6)
 
 # Using While loop
