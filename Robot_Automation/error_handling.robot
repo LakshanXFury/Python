@@ -34,3 +34,7 @@ ${URL}    https://example.com
     Open Browser    ${URL}    chrome
     Fail    Forcing an error
     [Teardown]    Close Browser
+
+7. Expect Error Example
+    # The test fails and logs the Divison error.
+    run keyword and expect error    *division error*    evaluate    10/0
