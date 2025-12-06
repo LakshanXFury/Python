@@ -2,7 +2,7 @@
 .DS_Store
 .env
 .csv
-
+echo ".idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
