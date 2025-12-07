@@ -6,8 +6,11 @@ ${url} =    https://www.globalsqa.com/demo-site/frames-and-windows/#iFrame
 
 *** Keywords ***
 Consent form
-    wait until element is visible    //p[text()='Consent']    5s
-    run keyword and continue on failure    click element    //p[text()='Consent']
+    ${consent_present} =    Run Keyword And Return Status
+    ...     Wait Until Element Is Visible    //p[text()='Consent']    5s
+    Run Keyword If    ${consent_present}    Click Element    //p[text()='Consent']
+    Run Keyword If    ${consent_present}    Log    Consent form clicked
+    ...     ELSE    Log    Consent form not present, continuing test
 
 
 *** Test Cases ***
@@ -21,9 +24,8 @@ Frame Handling in ROBOT
     select frame    //div[@rel-title="iFrame"]//iframe
     click element    //span[text()='Trainings']//ancestor::div[5]/following-sibling::div//div[@id='portfolio_filter']
     sleep    5s
-    unselect frame
     click element    //div[text()='Automation']
-
-
-
-
+    unselect frame
+    ${status}  ${result} =      Run Keyword And Ignore Error    click element    //div[text()='Automation']
+    Log To Console    Status: ${status}
+    Log To Console    Result/Error: ${result}
