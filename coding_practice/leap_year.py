@@ -45,4 +45,8 @@ Why divide by 400?
 
 To fine-tune even more, we make century years divisible by 400 back into leap years
 Rule: Years divisible by 400 ARE leap years (exception to the exception)
+
+Imp :
+100 rule: Removes most century years from being leap years
+400 rule: Adds back certain century years (every 400 years) to be leap years
 """
