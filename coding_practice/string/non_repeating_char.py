@@ -28,3 +28,4 @@ def non_char(string):
 
 
 non_char("malayalam")
+non_char("Dog and cat")
