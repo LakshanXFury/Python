@@ -1,6 +1,12 @@
+"""
+Code to find circular rotation of an array by K positions
+"""
+
+
 def rotate_array(array, k_value):
     n = len(array)
     k_value = k_value % n  # handle k greater than array size
+    # print(k_value)
     return array[-k_value:] + array[:-k_value]
 
 
