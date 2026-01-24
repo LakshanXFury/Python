@@ -1,5 +1,7 @@
 """
 Write a code to replace each element in an array by its rank in the array
+
+must use the ascending order, rank them and then re-rank them
 """
 
 def change_arr(array_list):
