@@ -5,7 +5,7 @@ must use the ascending order, rank them and then re-rank them
 """
 
 def change_arr(array_list):
-    sorted_array = sorted(array_list)
+    sorted_array = sorted(array_list)  # Sorted creates a new list.
     a = {}
     final_ranks = []
     rank = 0
@@ -22,3 +22,4 @@ def change_arr(array_list):
 
 
 print(change_arr([100, 50, 75, 25]))
+print(change_arr([3,10,99,20,5,9]))
