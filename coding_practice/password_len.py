@@ -21,18 +21,18 @@ Prints
 
 def validatePassword(password):
     if len(password) < 8:
-        return "False"
+        return "Weak"
     if " " in password:
-        return "False"
+        return "Weak"
 
     one_uppercase = any(i.isupper() for i in password)
     one_lowercase = any(i.islower() for i in password)
     one_digit = any(i.isdigit() for i in password)
 
     if one_uppercase and one_lowercase and one_digit:
-        return "True"
+        return "Strong"
 
-    return "False"
+    return "Weak"
 
 
 if __name__ == '__main__':
