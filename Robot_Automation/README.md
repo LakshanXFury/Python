@@ -29,3 +29,18 @@ robot --suite "Login Suite" test_directory/
 robot --suite "Login Suite" --suite "User Suite" test_directory/
 
 
+---------------------------------------------------------------
+Git Hub workflow
+
+Python/                                    (Your repo)
+├── .github/
+│   └── workflows/
+│       └── robot-tests.yml               ← Workflow instructions
+│
+├── Robot_Automation/
+│   ├── requirements.txt                  ← Python packages
+│   └── Tests/
+│       └── main.robot                    ← Your test code
+│
+└── (other files...)
+
