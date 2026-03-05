@@ -5,7 +5,7 @@ on:
 
 jobs:
   robot_tests:
-    runs-on: ubuntu_latest
+    runs-on: ubuntu-latest
 
 
     steps:
@@ -15,16 +15,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.14"
+          python-version: "3.11"
 
       - name: Install Robot Framework Selenium Library
-        uses: pip install -r Robot_Automation/requirements.txt
+        run: pip install -r Robot_Automation/requirements.txt
 
       - name: Set up Chrome
-        uses: browser actions/setup-chrome@latest
+        uses: browser-actions/setup-chrome@latest
 
       - name: Install ChromeDriver
-        uses: |
+        run: |
           sudo apt-get update
           sudo apt-get install -y chromium-chromedriver
 
