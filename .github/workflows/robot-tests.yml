@@ -1,0 +1,44 @@
+name: Robot Framework Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  robot_tests:
+    runs-on: ubuntu_latest
+
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.14"
+
+      - name: Install Robot Framework Selenium Library
+        uses: pip install -r Robot_Automation/requirements.txt
+
+      - name: Set up Chrome
+        uses: browser actions/setup-chrome@latest
+
+      - name: Install ChromeDriver
+        uses: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-chromedriver
+
+      - name: Run Robot Framework Tests
+        run: |
+          robot --outputdir results Robot_Automation/Tests/main.robot
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: robot-test-results
+          path: results/
+
+
+
+
