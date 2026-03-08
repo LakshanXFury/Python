@@ -1,0 +1,88 @@
+name: Robot Framework Api Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  robot-api_test_1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Robot Framework Libraries
+        run: pip install -r Robot_Automation/requirements.txt
+
+      - name: Run Robot Test for API GET
+        run: |
+          robot --outputdir results Robot_Automation/Tests/api_get.robot
+          
+      - name: Upload API GET results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-get-results
+          path: results/
+
+  robot-api_test_2:
+    needs: robot-api_test_1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Robot Framework Libraries
+        run: pip install -r Robot_Automation/requirements.txt
+
+      - name: Run Robot Test for API POST
+        run: |
+          robot --outputdir results Robot_Automation/Tests/api_post.robot
+
+      - name: Upload API POST results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-post-results
+          path: results/
+
+
+  robot-api_test_3:
+    needs: robot-api_test_2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Robot Framework Libraries
+        run: pip install -r Robot_Automation/requirements.txt
+
+      - name: Run Robot Test for API GET ISS
+        run: |
+          robot --outputdir results Robot_Automation/Tests/api_iss.robot
+
+      - name: Upload API ISS results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-iss-results
+          path: results/
+
+
