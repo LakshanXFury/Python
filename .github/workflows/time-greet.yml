@@ -1,0 +1,23 @@
+name: Date and Time Cron Workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.14"
+
+    - name: Run Cron Job
+      run: python GitHub_Workflow/daily_runner.py
+
