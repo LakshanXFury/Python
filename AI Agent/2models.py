@@ -23,8 +23,8 @@ sales_agent1 = Agent(name="Open AI Agent", instructions=instructions1, model="gp
 
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 
-gemini_client = AsyncOpenAI(base_url=GEMINI_BASE_URL, api_key=os.getenv("GEMINI_API_KEY"))
-gemini_model = OpenAIChatCompletionsModel(model="gemini-2.0-flash", openai_client=gemini_client)
+gemini_client = AsyncOpenAI(base_url=GEMINI_BASE_URL, api_key=os.getenv("GOOGLE_API_KEY"))
+gemini_model = OpenAIChatCompletionsModel(model="gemini-3-flash-preview", openai_client=gemini_client)
 
 # In model parameter we need to pass gemini model as variable not string, only then it will know that your talking to Gemini.
 #Or by default it will assume as Open AI model if u give as string
@@ -103,7 +103,7 @@ sales_manager = Agent(
 message = "Send out a cold sales email addressed to Dear CEO from Alice"
 
 async def main():
-    with trace("Automated SDR"):
+    with trace("Automated SDR with Multiple Agents"):
         result = await Runner.run(sales_manager, message)
         print("=" * 50)
         print("FINAL EMAIL OUTPUT:")
