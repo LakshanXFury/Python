@@ -4,9 +4,9 @@ Talk to other Model using Open AI
 from dotenv import load_dotenv
 from openai import OpenAI, AsyncOpenAI
 import os
-from agents import Agent, Runner, trace, function_tool, OpenAIChatCompletionsModel, input_guardrail, GuardrailFunctionOutput
+from agents import Agent, Runner, trace, output_guardrail, OpenAIChatCompletionsModel, input_guardrail, GuardrailFunctionOutput
 import asyncio
-
+from pydantic import BaseModel
 
 load_dotenv(override=True)
 
@@ -111,3 +111,72 @@ async def main():
         print(result.final_output)
 
 asyncio.run(main())
+
+#------###-------------------------------------
+# Guard Rail Agent
+
+## Input Guard Rail
+
+# class NameCheckOutput(BaseModel):
+#     is_name_in_message: bool  # just a field!
+#     name: str                  # just a field!
+#
+# guardrail_agent = Agent(
+#     name="Name check",
+#     instructions="Check if the user is including someone's personal name in what they want you to do.",
+#     output_type=NameCheckOutput,
+#     model="gpt-4o-mini"
+# )
+#
+# @input_guardrail
+# async def guardrail_against_name(ctx, agent, message):
+#     result = await Runner.run(guardrail_agent, message, context=ctx.context)
+#     is_name_in_message = result.final_output.is_name_in_message
+#     return GuardrailFunctionOutput(output_info={"found_name": result.final_output},tripwire_triggered=is_name_in_message)
+#
+#
+# ## Output Guard Rail
+# # Output check structure
+
+# class OutputCheckOutput(BaseModel):
+#     is_name_in_output: bool
+#     name: str
+#
+# # Guardrail agent for output
+# output_guardrail_agent = Agent(
+#     name="Output Name check",
+#     instructions="Check if the output contains someone's personal name.",
+#     output_type=OutputCheckOutput,
+#     model="gpt-4o-mini"
+# )
+#
+# # Output guardrail function
+# @output_guardrail
+# async def guardrail_against_name_in_output(ctx, agent, output):
+#     result = await Runner.run(output_guardrail_agent, output.final_output, context=ctx.context)
+#     is_name_in_output = result.final_output.is_name_in_output
+#     return GuardrailFunctionOutput(
+#         output_info={"found_name": result.final_output},
+#         tripwire_triggered=is_name_in_output
+#     )
+#
+# careful_sales_manager = Agent(
+#     name="Sales Manager",
+#     instructions=sales_manager_instructions,
+#     tools=tools,
+#     handoffs=[emailer_agent],
+#     model="gpt-4o-mini",
+#     input_guardrails=[guardrail_against_name],
+#     output_guardrails=[guardrail_against_name_in_output]
+#     )
+#
+#
+# async def main():
+#     with trace("Protected Automated SDR"):
+#         result = await Runner.run(careful_sales_manager, message)
+#         print("=" * 50)
+#         print("FINAL EMAIL OUTPUT:")
+#         print("=" * 50)
+#         print(result.final_output)
+#
+# asyncio.run(main())
