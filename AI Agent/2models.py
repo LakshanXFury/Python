@@ -180,3 +180,13 @@ asyncio.run(main())
 #         print(result.final_output)
 #
 # asyncio.run(main())
+
+"""
+INPUT GUARDRAIL                    OUTPUT GUARDRAIL
+checks BEFORE agent runs           checks AFTER agent runs
+        ↓                                  ↓
+"Send email from Alice"            "Dear CEO, I'm Alice..."
+        ↓                                  ↓
+found "Alice" → BLOCKED ❌         found "Alice" → BLOCKED ❌
+Agent never runs                   Output never returned
+"""
