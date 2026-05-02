@@ -156,8 +156,8 @@ asyncio.run(main())
 #     result = await Runner.run(output_guardrail_agent, output.final_output, context=ctx.context)
 #     is_name_in_output = result.final_output.is_name_in_output
 #     return GuardrailFunctionOutput(
-#         output_info={"found_name": result.final_output},
-#         tripwire_triggered=is_name_in_output
+#         output_info={"found_name": result.final_output}, ## This is just metadata you want to store about what the guardrail found. You can name the key anything:
+#         tripwire_triggered=is_name_in_output  ## The only one that really matters is tripwire_triggered — that's what controls whether the message gets blocked or allowed!
 #     )
 #
 # careful_sales_manager = Agent(
