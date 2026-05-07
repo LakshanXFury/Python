@@ -58,3 +58,41 @@ Step 5:
 When n becomes 12 (bigger than limit),
 the loop while n <= limit: stops → the generator ends → StopIteration is raised internally → for loop stops.
 """
+
+
+"""
+Key Difference: yield vs return
+
+return:
+
+Ends the function
+Returns value and exits
+Can only return once
+
+yield:
+
+Pauses the function
+Returns value but remembers state
+Can yield multiple times
+
+"""
+
+def count_up_to(n):
+    print("Starting...")
+    count = 1
+    while count <= n:
+        print(f"About to yield {count}")
+        yield count
+        print(f"Resumed after yielding {count}")
+        count += 1
+    print("Done!")
+
+# Create generator
+gen = count_up_to(3)
+
+print("Generator created")
+print(next(gen))  # Get first value
+print("Got first value")
+print(next(gen))  # Get second value
+print("Got second value")
+print(next(gen))  # Get third value
