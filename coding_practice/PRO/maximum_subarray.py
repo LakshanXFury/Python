@@ -15,10 +15,12 @@ def max_subarray(nums):
 
     for i in range(len(nums)):
         current_sum += nums[i]
-        if current_sum < 0:   ## This will catch if the sum goes to -ve
-            current_sum = 0
+
         if current_sum >= max_sum:
             max_sum = current_sum
+
+        if current_sum < 0:   ## This will catch if the sum goes to -ve
+            current_sum = 0
 
     return max_sum
 
