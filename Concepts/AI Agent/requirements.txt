@@ -1,0 +1,4 @@
+google-adk==2.3.0
+mcp==1.28.1
+rich==15.0.0
+requests==2.34.2
