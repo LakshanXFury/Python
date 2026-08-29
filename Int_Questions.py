@@ -53,6 +53,14 @@ def palindrome2(s, reversed_s):
 
 print(palindrome2('malayalam'))
 
+"""
+So when the palindrome function is called, the wrapper is called and reversing the string and storing in the "reversed_s"
+then the actual function is called using func which takes 2 arguments : "s & reversed_s". Then the comparison operator is
+comparing the 2 arguments
+
+-> decorator intercepts the call, does the reversing, then passes both to the original function for comparison.
+"""
+
 
 def palindrome(n):
     return n == n[::-1]
